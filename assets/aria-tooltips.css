@@ -1,4 +1,3 @@
-
 /** --------------------------------------------------------------------
 
   A11Y Tool Tips
@@ -9,11 +8,11 @@
 .no-js [role="tooltip"].a11y-tip__help:after {
   opacity: 0;
   pointer-events: none;
-  -webkit-transition: opacity .2s 1s ease-in-out, -webkit-transform .2s 1s ease-in-out;
-          transition: opacity .2s 1s ease-in-out, transform .2s 1s ease-in-out;
-  visibility: hidden;
+  -webkit-transition: opacity 0.2s 1s ease-in-out, -webkit-transform 0.2s 1s ease-in-out;
+          transition: opacity 0.2s 1s ease-in-out, transform 0.2s 1s ease-in-out;
   -webkit-transform-style: preserve-3d;
           transform-style: preserve-3d;
+  visibility: hidden;
 }
 
 .a11y-tip {
@@ -21,7 +20,7 @@
   position: relative;
 }
 .a11y-tip__trigger[tabindex] {
-  border-bottom: 1px solid #666;
+  border-bottom: 1px dotted #666;
 }
 .a11y-tip__trigger[aria-describedby]:hover + .a11y-tip__help,
 .a11y-tip__trigger[aria-describedby]:hover + .a11y-tip__help:after, .a11y-tip__trigger[aria-describedby]:focus + .a11y-tip__help,
@@ -58,12 +57,15 @@
   font-size: 14px;
   left: 50%;
   margin-top: 12px;
+  max-width: 400px;
   min-width: 220px;
   padding: .5em 1em;
   position: absolute;
+  text-align: left;
   top: 100%;
   -webkit-transform: translate(-50%, 10px);
           transform: translate(-50%, 10px);
+  width: 100%;
   z-index: 10;
 }
 .js .a11y-tip__help:after,
@@ -109,15 +111,6 @@
   margin-top: 0;
 }
 @media screen and (min-width: 41.25em) {
-  .js .a11y-tip__help,
-  .no-js [role="tooltip"].a11y-tip__help {
-    min-width: 1px;
-    white-space: nowrap;
-  }
-  .js .a11y-tip__help--ws-normal,
-  .no-js [role="tooltip"].a11y-tip__help--ws-normal {
-    white-space: normal;
-  }
   .js .a11y-tip__help--left,
   .no-js [role="tooltip"].a11y-tip__help--left {
     margin-right: 11px;
