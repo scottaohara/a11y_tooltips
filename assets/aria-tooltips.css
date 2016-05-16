@@ -12,6 +12,8 @@
   -webkit-transition: opacity .2s 1s ease-in-out, -webkit-transform .2s 1s ease-in-out;
           transition: opacity .2s 1s ease-in-out, transform .2s 1s ease-in-out;
   visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 }
 
 .a11y-tip {

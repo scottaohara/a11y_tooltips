@@ -24,7 +24,7 @@
 
         // if a trigger is not an inherently focusable element, it'll need a
         // tabindex. But if it can be inherently focused, then don't set a tabindex
-        if ( !$trigger.is('a') && !$trigger.is('button') && !$trigger.is('input') ) {
+        if ( !$trigger.is('a') && !$trigger.is('button') && !$trigger.is('input') && !$trigger.is('textarea') && !$trigger.is('select') ) {
           $trigger.attr('tabindex', '0');
         }
 
