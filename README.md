@@ -16,9 +16,9 @@ When a tooltip is revealed, hitting the <kbd>ESC</kbd> key will hide the tooltip
 
 ### Default Setup
 
-As tooltips can be applied to any element, all tooltips should be revealed by either hovering or keyboard focusing on an element. 
+As tooltips can be applied to any element, all elements with tooltips should be revealed by either mouse hover or keyboard focus. 
 
-For elements that do not inherently have the ability to be keyboard focused, a check is run via JavaScript to add a ```tabindex="0"``` to these elements. 
+For elements that do not inherently have the ability to recieve keyboard focused, a check is run via JavaScript to add a ```tabindex="0"``` to these elements. 
 
 The minimal mark-up required to generate a tooltip component is the following:
 
