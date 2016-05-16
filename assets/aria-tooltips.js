@@ -45,10 +45,6 @@
           $tip.attr('role', 'tooltip');
         }
 
-        if ( !$tip.attr('aria-live') ) {
-          $tip.attr('aria-live', 'polite');
-        }
-
         // end the loop, increase count by 1
         return count = count + 1;
       });
