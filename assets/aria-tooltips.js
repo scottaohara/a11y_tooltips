@@ -30,7 +30,7 @@
 
         // if a tip doesn't have an ID, then we need to generate one
         if ( !$tip.attr('id') ) {
-          $tip.attr('id', 'tool_tip_' + count )
+          $tip.attr('id', 'tool_tip_' + count );
         }
 
         // if a trigger doesn't have an aria-described by, then we need
