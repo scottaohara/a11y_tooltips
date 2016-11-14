@@ -46,7 +46,7 @@ However, if you have complete access to the mark-up, you can hard code all the a
 
 ```html
 <span class="a11y-tip">
-  <button type="button" class="a11y-tip__trigger" aria-describedby="tt_id">
+  <button type="button" aria-describedby="tt_id" class="a11y-tip__trigger">
     Button w/tooltip
   </button>
 
@@ -60,11 +60,11 @@ However, if you have complete access to the mark-up, you can hard code all the a
 <span class="a11y-tip">
   <!-- a tabindex of 0 will need to be manually added to any
        element that doesn't receive keyboard focus by default -->
-  <span class="a11y-tip__trigger" tabindex="0" aria-describedby="tool_tip_span">
+  <span aria-describedby="tool_tip_span" class="a11y-tip__trigger" tabindex="0">
     Tooltip Trigger span
   </span>
 
-  <span class="a11y-tip__help" id="tool_tip_span" role="tooltip">
+  <span id="tool_tip_span" role="tooltip" class="a11y-tip__help">
     Tooltip content goes here
   </span>
 </span>
