@@ -69,3 +69,11 @@ However, if you have complete access to the mark-up, you can hard code all the a
   </span>
 </span>
 ``` 
+
+### License & Such
+
+This script was written by [Scott O'Hara](https://twitter.com/scottohara).
+
+It has an [MIT](https://github.com/scottaohara/accessible-components/blob/master/LICENSE.md) license.
+
+Do with it what you will :)
