@@ -7,9 +7,9 @@
 
   a11yTT.init = function () {
 
-    var $ttContainer  = $('.a11y-tip'),
-        ttTrigger     = '.a11y-tip__trigger',
-        ttTheTip      = '.a11y-tip__help';
+    var $ttContainer  = $('.a11y-tip');
+    var ttTrigger     = '.a11y-tip__trigger';
+    var ttTheTip      = '.a11y-tip__help';
 
 
     var setup = function () {
@@ -18,9 +18,9 @@
       var count = 1;
 
       $ttContainer.each( function () {
-        var $self = $(this),
-            $trigger = $self.find(ttTrigger),
-            $tip = $self.find(ttTheTip);
+        var $self = $(this);
+        var $trigger = $self.find(ttTrigger);
+        var $tip = $self.find(ttTheTip);
 
         // if a trigger is not an inherently focusable element, it'll need a
         // tabindex. But if it can be inherently focused, then don't set a tabindex
