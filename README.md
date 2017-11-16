@@ -4,6 +4,8 @@ A progressively enhanced ARIA tooltip component.
 
 
 ## Functionality  
+Note: The functionality of these tooltips is based on the ARIA 1.0 specification.  There is currently no finalized version under the ARIA 1.1 specification.
+
 Tooltips appear when hovering over or focusing a tooltip component. 
 
 Tooltps, per the [W3C Recommendation](https://www.w3.org/TR/wai-aria-practices/#tooltip), should not be revealed until after a short delay (1 - 5 seconds) has passed. By default, this tooltip plug-in has a __1s delay__. To remove this delay, use the class `.a11y-tip--no-delay`  
