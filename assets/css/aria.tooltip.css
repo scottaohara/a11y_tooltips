@@ -1,0 +1,99 @@
+[data-tooltip] {
+	position: relative;
+}
+
+[data-tooltip-trigger] {
+	border: 1px solid #222;
+}
+
+.tooltip {
+	background: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #aaa;
+	bottom: calc(100% + 1.25em);
+	font-size: .825em;
+	left: 0;
+	margin: auto;
+	max-width: 280px;
+	opacity: 0;
+	padding: .625em;
+	pointer-events: none;
+	position: absolute;
+	right: 0;
+	transform: translateY(1em);
+	transition:
+		transform .2s .4s ease-in-out,
+		opacity .2s .4s ease-in-out,
+		visibility .2s .4s ease-in-out;
+	visibility: hidden;
+	width: 100vw;
+	z-index: 2;
+}
+
+@media screen and (min-width: 53.75em) {
+	.tooltip {
+		left: auto;
+		right: calc(15% - 100px);
+	}
+}
+
+.tooltip:after,
+.tooltip:before {
+	content: "";
+	height: 0;
+	position: absolute;
+	top: 100%;
+	width: 0;
+}
+
+.tooltip:after {
+	border-left: 1em solid transparent;
+  border-right: 1em solid transparent;
+  border-top: 1em solid #fafafa;
+  left: calc(50% + 2px);
+}
+
+.tooltip:before {
+	left: 50%;
+	border-left: calc(1em + 2px) solid transparent;
+  border-right: calc(1em + 2px) solid transparent;
+  border-top: calc(1em + 2px) solid #aaa;
+}
+
+.tooltip > * {
+	margin: .5em 0;
+}
+
+.tooltip ul,
+.tooltip ol {
+	padding-left: 1em;
+}
+
+.tooltip li {
+	margin: 0 0 .5em;
+}
+
+.tooltip :last-child {
+	margin-bottom: 0;
+}
+.tooltip :first-child {
+	margin-top: 0;
+}
+
+[data-tooltip-trigger]:hover ~ .tooltip,
+[aria-describedby]:focus ~ .tooltip,
+[aria-describedby]:hover ~ .tooltip,
+[data-tooltip-trigger][aria-expanded="true"] ~ .tooltip,
+[data-tooltip] input:focus ~ .tooltip,
+[data-tooltip] select:focus ~ .tooltip,
+[data-tooltip] textarea:focus ~ .tooltip{
+	opacity: 1;
+	transform: translateY(0em);
+	visibility: visible;
+}
+
+[data-tooltip].is-dismissed .tooltip {
+	opacity: 0;
+	transform: translateY(1em);
+	visibility: hidden;
+}
