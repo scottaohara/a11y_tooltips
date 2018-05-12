@@ -114,30 +114,39 @@
 						<h3>Tooltip 3a</h3>
 
 						<form>
-							<label for="password">
-								Create Password:
-							</label>
+
 							<div data-tooltip="toggle" data-tooltip-label="Password Help" data-tooltip-class="tt">
-								<input type="password" id="password">
-								<div class="tooltip">
-									<p>
-										A password needs to include the following:
-									</p>
-									<ul>
-										<li>A capital letter</li>
-										<li>A reference to your favorite sandwich</li>
-										<li>A special character that you'd never remember to type</li>
-										<li>To be something you'll immediately forget</li>
-										<li><a href="#">oh man, a link?</a></li>
-									</ul>
+								<div class="flex">
+									<label for="password">
+										Create Password:
+									</label>
+
+									<div data-tooltip-place-trigger>
+										<div class="tooltip">
+											<p>
+												A password needs to include the following:
+											</p>
+											<ul>
+												<li>A capital letter</li>
+												<li>A reference to your favorite sandwich</li>
+												<li>A special character that you'd never remember to type</li>
+												<li>To be something you'll immediately forget</li>
+												<li><a href="#">oh man, a link?</a></li>
+											</ul>
+										</div>
+									</div>
+
 								</div>
+
+								<input type="password" id="password">
+
 							</div>
 						</form>
 
 						<h3>Tooltips 3b</h3>
 
 						<div data-tooltip="toggle" data-tooltip-label="Reorder Help">
-							<h3 data-tooltip-place-trigger>
+							<h3 data-tooltip-place-trigger="last">
 								Reorder priorities
 							</h3>
 							<div class="tooltip">
