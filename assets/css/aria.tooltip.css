@@ -1,5 +1,10 @@
 [data-tooltip] {
+	display: inline-block;
 	position: relative;
+}
+
+[data-tooltip].block {
+	display: block;
 }
 
 [data-tooltip-trigger] {
@@ -84,9 +89,7 @@
 [aria-describedby]:focus ~ .tooltip,
 [aria-describedby]:hover ~ .tooltip,
 [data-tooltip-trigger][aria-expanded="true"] ~ .tooltip,
-[data-tooltip] input:focus ~ .tooltip,
-[data-tooltip] select:focus ~ .tooltip,
-[data-tooltip] textarea:focus ~ .tooltip{
+[data-tooltip] [aria-describedby]:focus ~ .tooltip {
 	opacity: 1;
 	transform: translateY(0em);
 	visibility: visible;
