@@ -8,7 +8,7 @@ Note: The functionality of these tooltips is based on the ARIA 1.0 specification
 
 Tooltips appear when hovering over or focusing a tooltip component. 
 
-Tooltps, per the [W3C Recommendation](https://www.w3.org/TR/wai-aria-practices/#tooltip), should not be revealed until after a short delay (1 - 5 seconds) has passed. By default, this tooltip plug-in has a __1s delay__. To remove this delay, use the class `.a11y-tip--no-delay`  
+Tooltps, per the WAI-ARIA 1.0 Practices Recommendation, should not be revealed until after a short delay (1 - 5 seconds) has passed. By default, this tooltip plug-in has a __1s delay__. To remove this delay, use the class `.a11y-tip--no-delay`  
 
 When a tooltip is revealed, hitting the <kbd>ESC</kbd> key will hide the tooltip until the instance is blurred and focus or hover is reapplied.
 
