@@ -27,9 +27,8 @@
 	right: 0;
 	transform: translateY(1em);
 	transition:
-		transform .2s .4s ease-in-out,
-		opacity .2s .4s ease-in-out,
-		visibility .2s .4s ease-in-out;
+		transform .14s .4s ease-out,
+		opacity .14s .4s ease-out;
 	visibility: hidden;
 	width: 100vw;
 	z-index: 2;
@@ -85,18 +84,18 @@
 	margin-top: 0;
 }
 
-[data-tooltip-trigger]:hover ~ .tooltip,
-[aria-describedby]:focus ~ .tooltip,
-[aria-describedby]:hover ~ .tooltip,
-[data-tooltip-trigger][aria-expanded="true"] ~ .tooltip,
-[data-tooltip] [aria-describedby]:focus ~ .tooltip {
+body:not(.block-tip) [data-tooltip] [aria-describedby]:focus ~ .tooltip,
+body:not(.block-tip) [data-tooltip] [aria-describedby]:hover ~ .tooltip,
+body:not(.block-tip) [data-tooltip-trigger]:hover ~ .tooltip,
+body:not(.block-tip) .tooltip.tooltip--reveal,
+.tooltip:hover,
+.tooltip:focus-within {
 	opacity: 1;
 	transform: translateY(0em);
 	visibility: visible;
 }
 
-[data-tooltip].is-dismissed .tooltip {
-	opacity: 0;
-	transform: translateY(1em);
-	visibility: hidden;
+
+.block-tip .tooltip {
+	display: none;
 }
