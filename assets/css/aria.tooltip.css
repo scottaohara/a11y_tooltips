@@ -11,6 +11,12 @@
 	border: 1px solid #222;
 }
 
+[data-tooltip-trigger][aria-expanded="true"] {
+	background: #111;
+	color: #fff;
+}
+
+
 .tooltip {
 	background: #fafafa;
 	border-radius: 3px;
@@ -32,6 +38,15 @@
 	visibility: hidden;
 	width: 100vw;
 	z-index: 2;
+}
+
+.tooltip > * {
+	position: relative;
+	z-index: 2;
+}
+
+.tooltip--expanded {
+	transition: none;
 }
 
 @media screen and (min-width: 53.75em) {
@@ -84,18 +99,20 @@
 	margin-top: 0;
 }
 
-body:not(.block-tip) [data-tooltip] [aria-describedby]:focus ~ .tooltip,
-body:not(.block-tip) [data-tooltip] [aria-describedby]:hover ~ .tooltip,
-body:not(.block-tip) [data-tooltip-trigger]:hover ~ .tooltip,
-body:not(.block-tip) .tooltip.tooltip--reveal,
+.no-js [data-tooltip] [aria-describedby]:focus ~ .tooltip,
+.no-js [data-tooltip] [aria-describedby]:hover ~ .tooltip,
+.no-js [data-tooltip-trigger]:hover ~ .tooltip,
+.tooltip.tooltip--reveal,
+.tooltip.tooltip--expanded,
 .tooltip:hover,
 .tooltip:focus-within {
 	opacity: 1;
+	pointer-events: auto;
 	transform: translateY(0em);
 	visibility: visible;
 }
 
 
-.block-tip .tooltip {
+.suppress-tip .tooltip {
 	display: none;
 }
