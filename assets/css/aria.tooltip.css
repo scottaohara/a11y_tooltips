@@ -3,12 +3,40 @@
 	position: relative;
 }
 
+[data-tooltip-place-trigger] {
+	position: relative;
+}
+
 [data-tooltip].block {
 	display: block;
 }
 
-[data-tooltip-trigger] {
-	border: 1px solid #222;
+.tooltip__toggle-btn {
+	background: none;
+	border-radius: 100%;
+	border: 2px solid;
+	font-size: inherit;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	vertical-align: text-bottom;
+}
+
+.tooltip__toggle-btn:hover,
+.tooltip__toggle-btn:focus {
+	border-color: blue;
+}
+
+.tooltip__toggle-btn:hover .tooltip__svg,
+.tooltip__toggle-btn:focus .tooltip__svg {
+	fill: blue;
+}
+
+.tooltip__svg {
+	display: block;
+	height: auto;
+	max-width: 1em;
+	width: 100%;
 }
 
 [data-tooltip-trigger][aria-expanded="true"] {
@@ -17,11 +45,12 @@
 }
 
 
-.tooltip {
+.tooltip,
+.tt /* test class */ {
 	background: #fafafa;
 	border-radius: 3px;
 	border: 1px solid #aaa;
-	bottom: calc(100% + 1.25em);
+	bottom: calc(90% + 12px);
 	font-size: .825em;
 	left: 0;
 	margin: auto;
@@ -32,12 +61,15 @@
 	position: absolute;
 	right: 0;
 	transform: translateY(1em);
-	transition:
-		transform .14s .4s ease-out,
-		opacity .14s .4s ease-out;
+	transition: opacity .2s ease-out;
 	visibility: hidden;
 	width: 100vw;
 	z-index: 2;
+}
+
+.tooltip:after {
+	content: "";
+	position: absolute;
 }
 
 .tooltip > * {
@@ -47,36 +79,6 @@
 
 .tooltip--expanded {
 	transition: none;
-}
-
-@media screen and (min-width: 53.75em) {
-	.tooltip {
-		left: auto;
-		right: calc(15% - 100px);
-	}
-}
-
-.tooltip:after,
-.tooltip:before {
-	content: "";
-	height: 0;
-	position: absolute;
-	top: 100%;
-	width: 0;
-}
-
-.tooltip:after {
-	border-left: 1em solid transparent;
-  border-right: 1em solid transparent;
-  border-top: 1em solid #fafafa;
-  left: calc(50% + 2px);
-}
-
-.tooltip:before {
-	left: 50%;
-	border-left: calc(1em + 2px) solid transparent;
-  border-right: calc(1em + 2px) solid transparent;
-  border-top: calc(1em + 2px) solid #aaa;
 }
 
 .tooltip > * {
@@ -104,6 +106,8 @@
 .no-js [data-tooltip-trigger]:hover ~ .tooltip,
 .tooltip.tooltip--reveal,
 .tooltip.tooltip--expanded,
+.tt.tooltip--reveal,
+.tt.tooltip--expanded, /* test class */
 .tooltip:hover,
 .tooltip:focus-within {
 	opacity: 1;
@@ -115,4 +119,33 @@
 
 .suppress-tip .tooltip {
 	display: none;
+}
+
+
+/**
+ * Readjust tooltip based on if it would otherwise
+ * flow out of the viewport window
+ */
+.tooltip--reveal.tooltip--push-left,
+.tooltip--expanded.tooltip--push-left {
+	left: 0;
+	right: auto;
+}
+
+.tooltip--reveal.tooltip--push-right,
+.tooltip--expanded.tooltip--push-right {
+	transition: none;
+	transform: translateX(-45%);
+}
+
+.tooltip--reveal.tooltip--push-up,
+.tooltip--expanded.tooltip--push-up {
+	bottom: 100%;
+	top: auto;
+}
+
+.tooltip--reveal.tooltip--push-down,
+.tooltip--expanded.tooltip--push-down {
+	bottom: auto;
+	top: 100%;
 }
