@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" class="no-js">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<meta charset="utf-8" />
 		<title>
 			Accessible Tooltips
 		</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="_demo-assets/demo.css">
 		<script>
 			// remove no-js and add 'js' to the HTML
 			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
 		</script>
-		<link rel="stylesheet" href="assets/css/aria.tooltip.css" />
+		<link rel="stylesheet" href="assets/css/aria.tooltip.css">
 	</head>
 	<body>
 
@@ -20,151 +20,187 @@
 			<div class="content-area">
 				<header>
 					<h1 class="txt-up-3">
-						Tooltips
+						Custom Tooltips
 					</h1>
+					<p>
+						Examples of accessible, custom tooltips.
+					</p>
 				</header>
 
 				<main>
+					<article>
+						<h2>
+							Tooltips
+						</h2>
 
-					<details>
-						<summary>Information</summary>
-						<p>
-							<a href="https://www.w3.org/TR/wai-aria-1.1/#tooltip">ARIA 1.1 Tooltip specification</a>
-						</p>
-
-						<p>
-							Tool tips should be able to be activated by:
-						</p>
-						<ul>
-							<li>hover, after a short pause.</li>
-							<li>
-								on focus of an element where there is no
-								press or click listener (e.g. a form control,
-								or button or link which perform other actions
-								on keypress or click).
-							</li>
-							<li>
-								On activation of a <code>button</code>, acting like
-								a disclosure widget, but auto-closing if a user moves
-								focus away from the tooltip trigger, or
-							</li>
-						</ul>
-					</details>
-
-					<section>
-						<header>
-							<h2>
-								Tooltip 1
-							</h2>
+						<details>
+							<summary>Information</summary>
 							<p>
-								Tooltip revealed on hover/focus of a focusable element.
+								The baseline for a tooltip to follow, but expand on the functionality of
+								native tooltips. e.g. the following:
 							</p>
-						</header>
-						<form>
-							<label for="name">
-								User Name
-							</label>
-							<div data-tooltip>
-								<input type="text" id="name" data-tooltip-trigger aria-describedby="name_tip">
-								<div id="name_tip" class="tooltip">
-									<p>
-										A user name can either be your phone number
-									</p>
-									<p>
-										Or your email address.
-									</p>
-								</div>
-							</div>
-						</form>
-					</section>
-
-					<section>
-						<header>
-							<h2>
-								Tooltip 2
-							</h2>
 							<p>
-								Tooltip revealed on hover/focus of an actionable element.
+								<a href="#!" title="a native html tooltip">Native Tooltip</a>
 							</p>
-						</header>
-
-						<p>
-							<span data-tooltip>
-								<button type="button"
-									data-tooltip-trigger
-									hidden
-									onClick="alert('this would delete something');">
-									Delete Account
-								</button>
-								<span class="tooltip">
-									Deleting your account will mean it's deleted.
-								</span>
-							</span>
-						</p>
-					</section>
-
-					<section>
-						<header>
-							<h2>
-								Tooltip 3
-							</h2>
 							<p>
-								A non-modal dialog
+								<a href="https://www.w3.org/TR/wai-aria-1.1/#tooltip">
+									ARIA 1.1 Tooltip specification
+								</a>
 							</p>
-						</header>
 
-						<h3>Tooltip 3a</h3>
+							<p>
+								Tool tips should be able to be activated by:
+							</p>
+							<ul>
+								<li>hover, after a short pause.</li>
+								<li>
+									on focus of an element where there is no
+									press or click listener (e.g. a form control,
+									or button or link which perform other actions
+									on keypress or click).
+								</li>
+							</ul>
+						</details>
 
-						<form>
 
-							<div data-tooltip="toggle" data-tooltip-label="Password Help">
-								<div class="flex">
-									<label for="password">
-										Create Password:
-									</label>
+						<input title="test">
 
-									<div data-tooltip-place-trigger="first">
-										<div class="tooltip">
-											<p>
-												A password needs to include the following:
-											</p>
-											<ul>
-												<li>A capital letter</li>
-												<li>A reference to your favorite sandwich</li>
-												<li>A special character that you'd never remember to type</li>
-												<li>To be something you'll immediately forget</li>
-												<li><a href="#">oh man, a link?</a></li>
-											</ul>
-										</div>
+						<section>
+							<header>
+								<h2>
+									Tooltip 1
+								</h2>
+								<p>
+									Tooltip revealed on hover/focus of a focusable element.
+								</p>
+							</header>
+							<form>
+
+								<label for="name">
+									User Name
+								</label>
+								<div data-tooltip="block">
+									<input type="text" id="name" data-tooltip-trigger aria-describedby="name_tip">
+									<div id="name_tip" data-tooltip-tip>
+										<p>
+											A user name can either be your phone number
+										</p>
+										<p>
+											Or your email address.
+										</p>
 									</div>
-
 								</div>
+							</form>
+						</section>
 
-								<input type="password" id="password">
+						<section>
+							<header>
+								<h2>
+									Tooltip 2
+								</h2>
+								<p>
+									Tooltip revealed on hover/focus of an actionable element.
+								</p>
+							</header>
 
-							</div>
-						</form>
+							<p>
+								<span data-tooltip>
+									<button type="button"
+										data-tooltip-trigger
+										onClick="alert('this would delete something');">
+										Delete Account
+									</button>
+									<span data-tooltip-tip>
+										Deleting your account will mean it's deleted.
+									</span>
+								</span>
+							</p>
+						</section>
 
-						<h3>Tooltips 3b</h3>
 
-						<div data-tooltip="toggle" data-tooltip-label="Reorder Help">
-							<h3 data-tooltip-place-trigger="last">
-								Reorder priorities
-							</h3>
-							<div class="tooltip">
-								so much info would go here.
-								<ul>
-									<li>like a stupid list of info</li>
-								</ul>
-							</div>
-						</div>
 
-					</section>
+						<section>
+							<header>
+								<h2>
+									Tooltip 3
+								</h2>
+								<p>
+									Tooltip revealed on hover/focus of an actionable element.
+									Retrieved from element outside of component.
+								</p>
+							</header>
 
+							<p>
+								<span data-tooltip data-tooltip-fetch="fetch">
+									<button type="button"
+										data-tooltip-trigger
+										onClick="alert('this would delete something');">
+										Delete Account
+									</button>
+								</span>
+							</p>
+							<div id="fetch">Deleting your account will mean it's deleted. <ul><li>doop!</ul></div>
+						</section>
+
+
+						<section>
+							<header>
+								<h2>
+									Tooltip 4a
+								</h2>
+								<p>
+									Tooltip revealed on hover/focus of an actionable element.
+									Tooltip generated from data attribute.
+								</p>
+							</header>
+
+							<p>
+								<span data-tooltip data-tooltip-generate="Deleting your account will mean it's deleted.">
+									<button type="button"
+										data-tooltip-trigger
+										onClick="alert('this would delete something');">
+										Delete Account
+									</button>
+								</span>
+							</p>
+						</section>
+
+						<section>
+							<header>
+								<h2>
+									Tooltip 4b
+								</h2>
+								<p>
+									Tooltip revealed on hover/focus of an actionable element.
+									Tooltip generated from title attribute.
+								</p>
+							</header>
+
+							<p>
+								<span data-tooltip data-tooltip-generate>
+									<button type="button"
+										title="Deleting your account will mean it's deleted."
+										data-tooltip-trigger
+										onClick="alert('this would delete something');">
+										Delete Account
+									</button>
+								</span>
+							</p>
+						</section>
+					</article>
 				</main>
 			</div>
 		</div>
-		<script src="assets/js/aria.tooltip.js"></script>
+		<script src="index.js"></script>
+		<script>
+			var selector = '[data-tooltip]';
+			var els = document.querySelectorAll(selector);
+
+			for ( var i = 0; i < els.length; i++ ) {
+				var dm = new ARIAtip( els[i] );
+			}
+		</script>
+		<!-- <script src="assets/js/aria.tooltip.min.js"></script> -->
 	</body>
 </html>
 

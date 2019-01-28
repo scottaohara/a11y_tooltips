@@ -3,47 +3,14 @@
 	position: relative;
 }
 
-[data-tooltip-place-trigger] {
-	position: relative;
-}
-
-[data-tooltip].block {
+[data-tooltip="block"] {
 	display: block;
 }
 
-.tooltip__toggle-btn {
-	background: none;
-	border-radius: 100%;
-	border: 2px solid;
-	font-size: inherit;
-	margin: 0;
-	overflow: hidden;
-	padding: 0;
-	vertical-align: text-bottom;
+/* cancels out flash of tooltip as JS gets setup  */
+.js [data-tooltip-tip] {
+	visibility: hidden;
 }
-
-.tooltip__toggle-btn:hover,
-.tooltip__toggle-btn:focus {
-	border-color: blue;
-}
-
-.tooltip__toggle-btn:hover .tooltip__svg,
-.tooltip__toggle-btn:focus .tooltip__svg {
-	fill: blue;
-}
-
-.tooltip__svg {
-	display: block;
-	height: auto;
-	max-width: 1em;
-	width: 100%;
-}
-
-[data-tooltip-trigger][aria-expanded="true"] {
-	background: #111;
-	color: #fff;
-}
-
 
 .tooltip,
 .tt /* test class */ {
@@ -61,7 +28,11 @@
 	position: absolute;
 	right: 0;
 	transform: translateY(1em);
-	transition: opacity .2s ease-out;
+	transition:
+		opacity .2s ease-out,
+		transform .2s ease-out,
+		visibility .2s ease-out;
+	transition-delay: .5s;
 	visibility: hidden;
 	width: 100vw;
 	z-index: 2;
@@ -77,21 +48,8 @@
 	z-index: 2;
 }
 
-.tooltip--expanded {
-	transition: none;
-}
-
 .tooltip > * {
 	margin: .5em 0;
-}
-
-.tooltip ul,
-.tooltip ol {
-	padding-left: 1em;
-}
-
-.tooltip li {
-	margin: 0 0 .5em;
 }
 
 .tooltip :last-child {
@@ -101,51 +59,39 @@
 	margin-top: 0;
 }
 
-.no-js [data-tooltip] [aria-describedby]:focus ~ .tooltip,
-.no-js [data-tooltip] [aria-describedby]:hover ~ .tooltip,
-.no-js [data-tooltip-trigger]:hover ~ .tooltip,
-.tooltip.tooltip--reveal,
-.tooltip.tooltip--expanded,
-.tt.tooltip--reveal,
-.tt.tooltip--expanded, /* test class */
-.tooltip:hover,
-.tooltip:focus-within {
+.tooltip.tooltip--show,
+.tt.tooltip--show {
 	opacity: 1;
-	pointer-events: auto;
 	transform: translateY(0em);
 	visibility: visible;
 }
 
 
-.suppress-tip .tooltip {
+.tooltip.tooltip--closed {
 	display: none;
 }
 
 
 /**
- * Readjust tooltip based on if it would otherwise
+ * Re-adjust tooltip based on if it would otherwise
  * flow out of the viewport window
  */
-.tooltip--reveal.tooltip--push-left,
-.tooltip--expanded.tooltip--push-left {
+.tooltip--show.tooltip--push-left {
 	left: 0;
 	right: auto;
 }
 
-.tooltip--reveal.tooltip--push-right,
-.tooltip--expanded.tooltip--push-right {
-	transition: none;
+.tooltip--show.tooltip--push-right {
 	transform: translateX(-45%);
+	transition: none;
 }
 
-.tooltip--reveal.tooltip--push-up,
-.tooltip--expanded.tooltip--push-up {
+.tooltip--show.tooltip--push-up {
 	bottom: 100%;
 	top: auto;
 }
 
-.tooltip--reveal.tooltip--push-down,
-.tooltip--expanded.tooltip--push-down {
+.tooltip--show.tooltip--push-down {
 	bottom: auto;
 	top: 100%;
 }
