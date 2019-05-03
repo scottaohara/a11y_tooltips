@@ -55,43 +55,18 @@
 .tooltip :last-child {
 	margin-bottom: 0;
 }
+
 .tooltip :first-child {
 	margin-top: 0;
 }
 
-.tooltip.tooltip--show,
-.tt.tooltip--show {
+.tooltip--show .tooltip,
+.tooltip--show .tt {
 	opacity: 1;
 	transform: translateY(0em);
 	visibility: visible;
 }
 
-
-.tooltip.tooltip--closed {
+.tooltip--closed .tooltip {
 	display: none;
-}
-
-
-/**
- * Re-adjust tooltip based on if it would otherwise
- * flow out of the viewport window
- */
-.tooltip--show.tooltip--push-left {
-	left: 0;
-	right: auto;
-}
-
-.tooltip--show.tooltip--push-right {
-	transform: translateX(-45%);
-	transition: none;
-}
-
-.tooltip--show.tooltip--push-up {
-	bottom: 100%;
-	top: auto;
-}
-
-.tooltip--show.tooltip--push-down {
-	bottom: auto;
-	top: 100%;
 }
