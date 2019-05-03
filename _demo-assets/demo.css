@@ -1,41 +1,110 @@
-body, html { font-family: arial; font-size: 16px; margin: 0; padding: 0; overflow-x: hidden;}
-h1, h2, h3, h4 ,h5 ,h6, p { margin-top: 0; } hr { margin: 40px 0; }
-p, li { line-height: 1.4; margin: 0 0 16px; } button, html [type="button"], [type="reset"], [type="submit"] { -webkit-appearance: button; cursor: pointer; font-family: inherit; font-style: inherit; } input[type="submit"]::-moz-focus-inner, button[type="submit"]::-moz-focus-inner, button:-moz-focusring, input:-moz-focusring { outline: 0; } button::-moz-focus-inner, input::-moz-focus-inner { border: 0; padding: 0; } code,kbd { background: #efefef; font-size: .825em; padding: 2px 4px; display: inline-block; line-height: 1; }
-.content-area { padding: 2em 1.25em }
-.page { max-width: 660px; margin: auto; padding: 3em 0;}
-pre { display: block; }
-pre code {
-	background: #fafafa;
-	border: 1px solid #666;
-	display: block;
-	padding: .55em;
+/**
+ * Demo styles
+ * Styling specific to the content and wrapping
+ * elements of each styled form control,
+ */
+html,
+body {
+	background: #fcfcfc;
+	font-family: arial;
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
 }
 
-input:not([type="checkbox"]),
-input:not([type="radio"]) {
-	display: block;
-	width: 100%;
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
 }
 
-button:focus {
-	outline: 2px solid;
-	outline-offset: 2px;
+body {
+	line-height: 1.4;
+	overflow-x: hidden;
 }
 
 input,
-select {
-	font-size: inherit;
-	margin-top: .325em;
+button {
+	font: inherit;
 }
 
+a {
+	color: #08599B;
+	font-weight: bold;
+}
 
-section, h3 {
-	border-top: 1px solid #ccc;
+h2, h3, h4, h5, h6 {
 	margin-top: 2em;
-	padding-top: 2em;
 }
 
+main {
+	padding-top: .75em;
+}
 
-.flex {
-	display: flex;
+.demo > header {
+	border-bottom: 1px solid #aaa;
+}
+
+a:hover,
+*:focus {
+	box-shadow: none;
+	outline: 2px solid;
+	outline-offset: 2px;
+	text-decoration: none;
+}
+
+pre {
+	background: #fdfdfd;
+	border: 1px solid #ccc;
+	max-width: 100%;
+	overflow: auto;
+	padding: .5em;
+}
+
+hr {
+	margin: 1.5em 0;
+}
+
+.demo-wrap {
+	background: #fff;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	margin: 0 auto;
+	max-width: 660px;
+	padding: 0 1.5em 3em;
+}
+
+.demo-wrap__header {
+	background: #1a2a1a;
+	color: #fefefe;
+	margin: -1em -1.5em 0;
+	padding: 3em 1.5em 2em;
+	position: relative;
+}
+
+.demo-wrap__header a {
+	color: #fff;
+}
+
+.demo-wrap__header__title {
+	font-size: 1.3em;
+	margin-bottom: .5em;
+	margin-top: .5em;
+}
+
+.demo-details {
+	margin-top: 3em
+}
+
+.demo-details > h3 {
+	margin-top: 0;
+}
+
+/* IE + Edge need this to treat as a block element */
+details {
+	display: block;
+}
+
+p code {
+	white-space: nowrap;
 }
