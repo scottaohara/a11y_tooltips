@@ -44,190 +44,225 @@ var util = {
 (function ( w, doc, undefined ) {
   /**
    * ARIA Tooltips
-   * ...
+   * Widget to reveal a short description, or
+   * the element's accessible name on hover/focus.
    *
    * Author: Scott O'Hara
-   * Version: 0.1.0
-   * License:
+   * Version: 1.0.0
+   * License: MIT
    */
-  var tipOptions = {
+
+  var tipConfig = {
     baseID: 'tt_',
-    tipAttr: 'data-tooltip-tip',
+
+    tipWrapperClass: 'tooltip',
+    tipContentClass: 'tooltip__content',
+
+    tipTypeAttr: 'data-tooltip',
+    tipSourceAttr: 'data-tooltip-source',
+    tipContentAttr: 'data-tooltip-content',
+
     tipSelector: '[data-tooltip-tip]',
     triggerSelector: '[data-tooltip-trigger]',
-    dynamicTipAttr: 'data-tooltip-generate',
-    fetchTipAttr: 'data-tooltip-fetch',
-    tipClass: 'tooltip',
+
     consoleWarn: 'Missing tip...'
   };
 
+  /**
+   * typeSelector should accept values
+   * - empty string = describedby
+   * - label
+   *     - display aria-label content
+   *     - if aria-labelledby must add aria-hidden
+   */
 
   var ARIAtip = function ( inst, options ) {
     var el = inst;
     var elID;
     var elTip;
-    var elTipId;
+    var elTipID;
     var elTrigger;
-    var _options = Object.assign(tipOptions, options);
-    var tipVisible;
+    var tipContent;
+    var tipType;
+    var _options = Object.assign(tipConfig, options);
 
+
+    /**
+     * Initiate the
+     */
     var init = function () {
-      var self = this;
+      // if an element has an ID, use that as the
+      // basis for the tooltip's ID. Or, generate one.
       elID = el.id || util.generateID(_options.baseID);
+      // the element that will trigger the tooltip on hover or focus.
       elTrigger = el.querySelector(_options.triggerSelector);
-
-      /**
-       * Check to see if there is a tip within the component.
-       * If not, either fetch it, generate it, or someone forgot...
-       */
-      if ( !el.querySelector(_options.tipSelector) ) {
-        if ( el.hasAttribute(_options.fetchTipAttr) ) {
-          fetchTip();
-        }
-        else if ( el.hasAttribute(_options.dynamicTipAttr) ) {
-          generateTip();
-        }
-        else {
-          // nothing left to do, no tip found.
-          console.warn(_options.dynamicTipAttr)
-          return false;
-        }
-      }
-
-      /**
-       * By this point the tip will be created,
-       * so now it can be set to the var and
-       * the remaining functions can be run.
-       */
-      elTip = el.querySelector(_options.tipSelector);
-
-      setupTip();
+      // base the tip's ID off from the element's tip
+      elTipID = elID + '_tip';
+      // determine the type of tip
+      tipType = tipType();
+      // retrieve the content for the tip (flatted text string)
+      tipContent = getTipContent();
+      // create the tip
+      createTip();
+      // add/modify the necessary attributes of the trigger.
       setupTrigger();
+      // Attach the various events to the triggers
       attachEvents();
     };
 
 
     /**
-     * Function to pull the contents of an identified element
-     * elsewhere in the DOM into the tooltip component.
+     * A tooltip can either provide a description to
+     * the element that it is associated with, or it
+     * can provide a means to visually display the element's
+     * accessible name.
      */
-    var fetchTip = function () {
-      var source = doc.getElementById(el.getAttribute(_options.fetchTipAttr));
-      var newTip = doc.createElement('span');
-      // tooltips should be text strings. so if someone
-      // points to a complex markup pattern then
-      // the child elements will be dropped.
-      newTip.innerHTML = source.innerText;
-      newTip.setAttribute(_options.tipAttr, '')
-      source.parentNode.removeChild(source);
-
-      el.appendChild(newTip);
-    }; // fetchTip()
-
-
-    /**
-     * Create a custom tooltip from the title attribute
-     * of the child of the tooltip component, or create
-     * the tooltip based on the contents of the
-     * component wrapper's data attribute.
-     */
-    var generateTip = function () {
-      var source;
-
-      if ( el.getAttribute(_options.dynamicTipAttr) === '' ) {
-        if ( elTrigger.title ) {
-          source = elTrigger.title;
-        }
-        else {
-          console.warn(_options.consoleWarn);
-          return false;
-        }
+    var tipType = function () {
+      if ( el.getAttribute(_options.tipTypeAttr) === 'label' ) {
+        return 'label';
       }
       else {
-        source = el.getAttribute(_options.dynamicTipAttr);
+        return 'description';
       }
-
-      var newTip = doc.createElement('span');
-      newTip.innerHTML = source;
-      newTip.setAttribute(_options.tipAttr, '');
-
-      el.appendChild(newTip);
-    }; // generateTip()
+    };
 
 
     /**
-     * Once the custom tooltip element has been created,
-     * then setupTip can run, adding the ID, class for styling,
-     * and role attribute.
+     * The content of a tooltip can come from different sources
+     * so as to allow for fallback content in case this script
+     * cannot run.
+     *
+     * A tip could be sourced from an element in the DOM via
+     * the attribute data-tooltip-tip (a child of the widget),
+     * or an ID referenced from data-tooltip-source (does not
+     * have to be a child of the widget),
+     * the trigger's title or aria-label attribute
      */
-    var setupTip = function () {
-      elTipId = elTip.id || elID + '_tip';
-      if ( !elTip.id ) {
-        elTip.id = elTipId;
-      }
-      elTip.setAttribute('role', 'tooltip');
-      elTip.classList.add('tooltip');
-    }; // setupTip()
+    var getTipContent = function () {
+      var toReturn; // text string to return
+      var tipAttrContent = el.getAttribute(_options.tipContentAttr);
+      var tipAriaLabel = elTrigger.getAttribute('aria-label');
+      var widgetChild = el.querySelector(_options.tipSelector);
+      var externalSource = el.getAttribute(_options.tipSourceAttr);
 
+      if ( tipAttrContent ) {
+        toReturn = tipAttrContent;
+      }
+      else if ( externalSource ) {
+        var sourceEl = doc.getElementById(externalSource);
+        toReturn = sourceEl.textContent;
+        sourceEl.parentNode.removeChild(sourceEl);
+      }
+      else if ( widgetChild ) {
+        toReturn = widgetChild.textContent;
+        widgetChild.parentNode.removeChild(widgetChild);
+      }
+      else if ( tipAriaLabel && tipType === 'label' ) {
+        toReturn = tipAriaLabel;
+        elTrigger.removeAttribute('aria-label');
+      }
+      else if ( elTrigger.title ) {
+        toReturn = elTrigger.title;
+        elTrigger.removeAttribute('title');
+      }
+
+      return toReturn;
+    };
 
     /**
-     * The element that trigger's the tooltip should
-     * have an aria-describedby attribute to point to the
-     * tooltip contents.  If it had a title attribute,
-     * that should be removed so as to not have duplicate
-     * or conflicting descriptions / tooltips.
+     * Create the necessary tooltip components for each
+     * instance of the widget.
+     */
+    var createTip = function () {
+      var tipOuter = doc.createElement('span');
+      var tipInner = doc.createElement('span');
+
+      tipOuter.classList.add(_options.tipWrapperClass);
+      tipInner.classList.add(_options.tipContentClass);
+      tipInner.textContent = tipContent;
+      tipInner.id = elTipID;
+
+      if ( tipType !== 'label') {
+        tipInner.setAttribute('role', 'tooltip');
+      }
+      else {
+        tipInner.setAttribute('aria-hidden', 'true');
+      }
+
+      tipOuter.appendChild(tipInner);
+      el.appendChild(tipOuter);
+    };
+
+    /**
+     * Ensure the tooltip trigger has the appropriate
+     * attributes on it, and that they point to the
+     * correct IDs.
      */
     var setupTrigger = function () {
-      if ( !elTrigger.hasAttribute('aria-describedby') ) {
-        elTrigger.setAttribute('aria-describedby', elTipId);
+      if ( tipType === 'label' ) {
+        elTrigger.setAttribute('aria-labelledby', elTipID);
       }
-
-      // You can't have both a native description and a custom one.
-      elTrigger.removeAttribute('title');
-    }; // setupTip()
-
+      else {
+        elTrigger.setAttribute('aria-describedby', elTipID);
+      }
+    };
 
     /**
-     * If when a tooltip is invoked, but would be positioned
-     * outside of the bounds of the viewport, then this
-     * function should catch that and modify the CSS to
-     * reposition in an attempt to mitigate the tooltip
-     * not being seen.
+     * Check the current viewport to determine if the tooltip
+     * will be revealed outside of the current viewport's bounds.
+     * If so, try to reposition to ensure it's within.
      */
-    var updatePosition = function () {
-      var bounding = elTip.getBoundingClientRect();
+    var checkPositioning = function () {
+      // TODO
+    };
 
-      /**
-       * TODO
-       */
-    }; // updatePosition()
-
-
+    /**
+     * Add class to show tooltip.
+     * Checks positioning to help ensure within viewport.
+     * Adds global event to escape tip.
+     */
     var showTip = function () {
-      // tipVisible = true;
-      el.classList.add(_options.tipClass + '--show');
-      doc.addEventListener('keydown', escTip, false);
+      el.classList.add(_options.tipWrapperClass + '--show');
+      // checkPositioning();
+      doc.addEventListener('keydown', globalEscape, false);
     };
 
+    /**
+     * Removes classes for show and/or suppressed tip.
+     * Removes classes for positioning.
+     * Removes global event to escape tip.
+     */
     var hideTip = function () {
-      // tipVisible = false;
-      el.classList.remove(_options.tipClass + '--show');
-      el.classList.remove(_options.tipClass + '--closed');
-      doc.removeEventListener('keydown', escTip);
+      el.classList.remove(_options.tipWrapperClass + '--show');
+      el.classList.remove(_options.tipWrapperClass + '--suppress');
+      // resetPositioning();
+      doc.removeEventListener('keydown', globalEscape);
     };
 
+    /**
+     * forces dismiss, ensure tip cannot be re-shown.
+     * until user purposefully moves away from tip.
+     */
     var suppressTip = function () {
-      el.classList.add(_options.tipClass + '--closed');
+      el.classList.add(_options.tipWrapperClass + '--suppress');
     };
 
-    var escTip = function ( e ) {
+    /**
+     * Global event to allow the ESC key to close
+     * an invoked tooltip, regardless of where focus/hover
+     * is in the DOM.
+     *
+     * Calls both hideTip and suppressTip functions to help
+     * better replicate native tooltip suppression behavior.
+     */
+    var globalEscape = function ( e ) {
       var keyCode = e.keyCode || e.which;
 
       switch ( keyCode ) {
         case util.keyCodes.ESC:
           e.preventDefault();
           hideTip();
-          suppressTip(); // quickly hide and keep hidden
+          suppressTip();
           break;
 
         default:
@@ -235,23 +270,20 @@ var util = {
       }
     };
 
-
     var attachEvents = function () {
-      elTrigger.addEventListener('mouseover', showTip, false);
+      elTrigger.addEventListener('mouseenter', showTip, false);
       elTrigger.addEventListener('focus', showTip, false);
 
-      el.addEventListener('mouseout', hideTip, false);
+      el.addEventListener('mouseleave', hideTip, false);
       elTrigger.addEventListener('blur', hideTip, false);
 
-      elTrigger.addEventListener('keydown', escTip, false);
-    }; // attachEvents()
+      elTrigger.addEventListener('keydown', globalEscape, false);
+    };
 
 
     init.call(this);
-
     return this;
-  };
-
+  }; // ARIAtip
 
   w.ARIAtip = ARIAtip;
 })( window, document );
