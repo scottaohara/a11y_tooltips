@@ -3,70 +3,53 @@
 	position: relative;
 }
 
-[data-tooltip="block"] {
+[data-tooltip-block] {
 	display: block;
 }
 
-/* cancels out flash of tooltip as JS gets setup  */
-.js [data-tooltip-tip] {
-	visibility: hidden;
+.tooltip {
+	font-size: .825rem;
+	left: 0;
+	min-width: 280px;
+	pointer-events: none;
+	position: absolute;
+	top: 100%;
+	width: 100%;
+	z-index: 2;
 }
 
-.tooltip,
-.tt /* test class */ {
+.tooltip__content {
 	background: #fafafa;
 	border-radius: 3px;
 	border: 1px solid #aaa;
-	bottom: calc(90% + 12px);
-	font-size: .825em;
-	left: 0;
-	margin: auto;
-	max-width: 280px;
+	display: inline-block;
+	visibility: hidden;
 	opacity: 0;
 	padding: .625em;
-	pointer-events: none;
-	position: absolute;
-	right: 0;
-	transform: translateY(1em);
-	transition:
-		opacity .2s ease-out,
-		transform .2s ease-out,
-		visibility .2s ease-out;
-	transition-delay: .5s;
-	visibility: hidden;
-	width: 100vw;
-	z-index: 2;
 }
 
-.tooltip:after {
-	content: "";
-	position: absolute;
-}
-
-.tooltip > * {
-	position: relative;
-	z-index: 2;
-}
-
-.tooltip > * {
+.tooltip__content > * {
 	margin: .5em 0;
 }
 
-.tooltip :last-child {
+.tooltip__content :last-child {
 	margin-bottom: 0;
 }
 
-.tooltip :first-child {
+.tooltip__content :first-child {
 	margin-top: 0;
 }
 
-.tooltip--show .tooltip,
-.tooltip--show .tt {
+.tooltip--show .tooltip {
+	pointer-events: auto;
+}
+
+.tooltip--show .tooltip__content {
 	opacity: 1;
-	transform: translateY(0em);
+	transition: opacity .15s .8s ease-in;
 	visibility: visible;
 }
 
-.tooltip--closed .tooltip {
-	display: none;
+.tooltip--suppress .tooltip__content {
+	visibility: hidden;
 }
