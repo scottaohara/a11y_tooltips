@@ -163,8 +163,12 @@ var util = {
       }
       else if ( elTrigger.title ) {
         toReturn = elTrigger.title;
-        elTrigger.removeAttribute('title');
       }
+
+      // an element cannot have both a custom tooltip
+      // and a tooltip from a title attribute.  So no
+      // matter what, remove the title attribute.
+      elTrigger.removeAttribute('title');
 
       return toReturn;
     };
