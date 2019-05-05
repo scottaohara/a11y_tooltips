@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-us" class="no-js">
 	<head>
-		<meta http-equiv="X-UA-Compatible" content="IE=Edge">
 		<meta charset="utf-8" />
-		<title>
-			Accessible Tooltips
-		</title>
+		<title>Custom Tooltips</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="_demo-assets/demo.css">
 		<script>
@@ -16,181 +13,236 @@
 	</head>
 	<body>
 
-		<div class="page">
-			<div class="content-area">
-				<header>
-					<h1 class="txt-up-3">
-						Custom Tooltips
-					</h1>
-					<p>
-						Examples of accessible, custom tooltips.
-					</p>
-				</header>
+		<div class="demo-wrap">
 
-				<main>
-					<article>
+			<header class="demo-wrap__header">
+				<h1 class="demo-wrap__header__title">Custom Tooltips</h1>
+				<p>
+					Examples of accessible, custom tooltips.
+				</p>
+			</header>
+
+			<main aria-label="content">
+				<article>
 						<h2>
-							Tooltips
+							Tooltips primer
 						</h2>
 
 						<details>
 							<summary>Information</summary>
 							<p>
-								The baseline for a tooltip to follow, but expand on the functionality of
-								native tooltips. e.g. the following:
+								A tooltip is meant to provide short, but non-essential, information to help further describe the element it is associated with.
 							</p>
 							<p>
-								<a href="#!" title="a native html tooltip">Native Tooltip</a>
+								In native HTML the <code>title</code> attribute can be used to provide an element with a tooltip. For example, hovering over: <a href="#!" title="a native html tooltip">this test link</a>.
 							</p>
 							<p>
+								The problem with HTML tooltips is that they are often not discoverable to people unless they are specifically using a mouse to interact with content.   Some browsers, like IE11 and pre-Chromium Edge (hopefully post Chromium as well), expose HTML tooltips on focus of an element.  However, this still means that elements that cannot (and often times should not) receive focus will still have tooltips that will likely be inaccessible to people not using a mouse.
+							</p>
+
+							<h3>Custom Tooltips</h3>
+							<p>
+								To create a custom tooltip, we should look to the
 								<a href="https://www.w3.org/TR/wai-aria-1.1/#tooltip">
-									ARIA 1.1 Tooltip specification
+									ARIA specification for <code>role=tooltip</code>.
 								</a>
 							</p>
 
 							<p>
-								Tool tips should be able to be activated by:
+								The following are criteria to follow when building a custom tooltip:
 							</p>
 							<ul>
-								<li>hover, after a short pause.</li>
 								<li>
-									on focus of an element where there is no
-									press or click listener (e.g. a form control,
-									or button or link which perform other actions
-									on keypress or click).
+									The tooltip is invoked upon hover or focus of the element which the tooltip describes, after a short pause.
+								</li>
+								<li>
+									The tooltip should be referenced by the element that it is associated with by use of <code>aria-describedby</code>.
+								</li>
+								<li>
+									The tooltip itself should not be focusable, or contain elements which are focusable.  Contents announced by <code>aria-describedby</code> are flattened to a single text string.  Any nested semantics will be lost, if not completely ignored.  E.g. a "link" or "heading" will not be announced, only their text strings.  A list within a tooltip may be completely ignored by certain assistive technologies when announced as the flattened string.
+								</li>
+								<li>
+									The tooltip is dismissed after the element which invoked the tooltip has been blurred.
+								</li>
+								<li>
+									The tooltip should dismiss upon mouse hover leaving the element which invoked the tooltip, <strong>unless</strong> the mouse is moved to hover the tooltip itself, per <a href="https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html">WCAG success criterion for 1.4.13: Content on Hover or Focus</a>.  If mouse hover is no longer over the initial element that invoked the tooltip, nor the tooltip itself, then the tooltip is dismissed.
+								</li>
+								<li>
+									A tooltip is dismissible by use of the <code>Esc</code> key to mimic a native HTML tooltip's functionality, as well as also meeting WCAG 1.4.13.
 								</li>
 							</ul>
+
+
+							<p>
+								Baseline test: a <code>input</code> with a <code>title</code> attribute.  In this instance, the <code>title</code> provides the <code>input</code> with its accessible name, due to the <code>input</code> not having a name from more optimal sources.
+							</p>
+							<input title="test">
 						</details>
 
 
-						<input title="test">
-
 						<section>
-							<header>
-								<h2>
-									Tooltip 1
-								</h2>
-								<p>
-									Tooltip revealed on hover/focus of a focusable element.
-								</p>
-							</header>
-							<form>
+							<h2>
+								Tooltip on a text fields
+							</h2>
 
+							<div class="test">
+								<p>Hard coded fallback.</p>
 								<label for="name">
 									User Name
 								</label>
-								<div data-tooltip="block">
+								<div data-tooltip>
 									<input type="text" id="name" data-tooltip-trigger aria-describedby="name_tip">
-									<div id="name_tip" data-tooltip-tip>
+									<div data-tooltip-tip id="name_tip">
 										<p>
-											A user name can either be your phone number
-										</p>
-										<p>
-											Or your email address.
+											A user name can either be your phone number,<br>
+											or your email address.
 										</p>
 									</div>
 								</div>
-							</form>
+							</div>
+
+							<div class="test">
+								<label for="name2">
+									Last Name
+								</label>
+								<div data-tooltip data-tooltip-block>
+									<input type="text" id="name2" data-tooltip-trigger aria-describedby="name2_tip">
+									<div data-tooltip-tip id="name2_tip">
+										<p>
+											As this is the Internet, an apostrophe is not allowed.
+										</p>
+										<p>Change your name.
+										</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="test">
+								<div data-tooltip="label" data-tooltip-block>
+									<input type="text" aria-label="Middle Name" aria-describedby="m_name" data-tooltip-trigger>
+									<p id="m_name" style="margin-bottom: 0; font-size: .825rem">
+										Not really sure why we need this...
+									</p>
+								</div>
+							</div>
+
+							<div class="test">
+								<h3>
+									Tooltip generated from title attribute
+								</h3>
+								<label for="petName">
+									Favorite Pet's Name
+								</label>
+								<div data-tooltip>
+									<input type="text" id="petName" data-tooltip-trigger title="It wasn't Fido, was it?">
+								</div>
+							</div>
 						</section>
 
 						<section>
-							<header>
-								<h2>
-									Tooltip 2
-								</h2>
+							<h2>
+								Tooltip on buttons and links
+							</h2>
+							<div class="test">
+								<h3>Tooltip hard coded in DOM.</h3>
 								<p>
-									Tooltip revealed on hover/focus of an actionable element.
-								</p>
-							</header>
-
-							<p>
-								<span data-tooltip>
-									<button type="button"
-										data-tooltip-trigger
-										onClick="alert('this would delete something');">
-										Delete Account
-									</button>
-									<span data-tooltip-tip>
-										Deleting your account will mean it's deleted.
+									<span data-tooltip>
+										<button type="button"
+											data-tooltip-trigger
+											onClick="alert('this would delete something');">
+											Delete Account
+										</button>
+										<span data-tooltip-tip>
+											Deleting your account will mean it's deleted.
+										</span>
 									</span>
-								</span>
-							</p>
-						</section>
-
-
-
-						<section>
-							<header>
-								<h2>
-									Tooltip 3
-								</h2>
-								<p>
-									Tooltip revealed on hover/focus of an actionable element.
-									Retrieved from element outside of component.
 								</p>
-							</header>
+							</div>
 
-							<p>
-								<span data-tooltip data-tooltip-fetch="fetch">
-									<button type="button"
-										data-tooltip-trigger
-										onClick="alert('this would delete something');">
-										Delete Account
-									</button>
-								</span>
-							</p>
-							<div id="fetch">Deleting your account will mean it's deleted. <ul><li>doop!</ul></div>
-						</section>
-
-
-						<section>
-							<header>
-								<h2>
-									Tooltip 4a
-								</h2>
+							<div class="test">
+								<h3>Tooltip hard coded in DOM.</h3>
 								<p>
-									Tooltip revealed on hover/focus of an actionable element.
-									Tooltip generated from data attribute.
+									You can try to
+									<span data-tooltip>
+										<a href="#!"
+											data-tooltip-trigger
+											onClick="alert('this would go somewhere');">
+											visit our online store
+
+											<span data-tooltip-tip>
+												External link.
+											</span>
+										</a>
+
+									</span>
+									to see if we have what you need.
 								</p>
-							</header>
+							</div>
 
-							<p>
-								<span data-tooltip data-tooltip-generate="Deleting your account will mean it's deleted.">
-									<button type="button"
-										data-tooltip-trigger
-										onClick="alert('this would delete something');">
-										Delete Account
-									</button>
-								</span>
-							</p>
-						</section>
-
-						<section>
-							<header>
-								<h2>
-									Tooltip 4b
-								</h2>
+							<div class="test">
+								<h3>Tooltip created from <code></code></h3>
 								<p>
-									Tooltip revealed on hover/focus of an actionable element.
-									Tooltip generated from title attribute.
+									<span data-tooltip data-tooltip-content="Modify account settings.">
+										<button data-tooltip-trigger onClick="alert('this would edit something');">
+											Edit
+										</button>
+									</span>
 								</p>
-							</header>
+							</div>
 
-							<p>
-								<span data-tooltip data-tooltip-generate>
-									<button type="button"
-										title="Deleting your account will mean it's deleted."
-										data-tooltip-trigger
-										onClick="alert('this would delete something');">
-										Delete Account
-									</button>
-								</span>
-							</p>
+							<div class="test">
+								<h3>Tooltip created from <code></code></h3>
+								<p>
+									<span data-tooltip data-tooltip-content="External link" style="font-size: 1.75em">
+										<a href="#!" data-tooltip-trigger onClick="alert('this would go somewhere');">
+											How to make marvelously magnificent marbled muffins
+										</a>
+									</span>
+								</p>
+							</div>
+
+
+							<div class="test">
+								<h3>
+									Tooltip created from existing content in the DOM
+								</h3>
+								<p>
+									<span data-tooltip data-tooltip-source="fetch">
+										<button type="button"
+											data-tooltip-trigger
+											onClick="alert('this would delete something');">
+											Delete Account
+										</button>
+									</span>
+								</p>
+								<div id="fetch">
+									<p>Deleting is permanent.</p>
+									<ul>
+										<li>When it's gone it's gone.</li>
+										<li>You'll be sad.</li></ul>
+								</div>
+							</div>
+
+							<div class="test">
+								<h3>
+									Tooltip generated from title attribute
+								</h3>
+								<p>
+									<span data-tooltip>
+										<button
+											title="Now it's a custom tooltip"
+											data-tooltip-trigger
+											onClick="alert('this would delete something');">
+											Had a title
+										</button>
+									</span>
+								</p>
+							</div>
 						</section>
 					</article>
-				</main>
-			</div>
+			</main>
 		</div>
+
 		<script src="index.js"></script>
 		<script>
 			var selector = '[data-tooltip]';
@@ -200,7 +252,6 @@
 				var dm = new ARIAtip( els[i] );
 			}
 		</script>
-		<!-- <script src="assets/js/aria.tooltip.min.js"></script> -->
 	</body>
 </html>
 
