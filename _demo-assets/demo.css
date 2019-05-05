@@ -108,3 +108,18 @@ details {
 p code {
 	white-space: nowrap;
 }
+
+
+.test {
+	padding: 1em;
+	margin: 1em 0;
+	border: 1px solid #ccc;
+}
+
+.test > :first-child {
+	margin-top: 0;
+}
+
+.test > :last-child {
+	margin-bottom: 0;
+}
