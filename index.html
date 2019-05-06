@@ -1,125 +1,263 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-us" class="no-js">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Accessible ARIA Tooltips</title>
+	<head>
+		<meta charset="utf-8" />
+		<title>Custom Tooltips</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="_demo-assets/demo.css">
+		<script>
+			// remove no-js and add 'js' to the HTML
+			document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+		</script>
+		<link rel="stylesheet" href="assets/css/aria.tooltip.css">
+	</head>
+	<body>
 
-    <script>
-      // remove no-js and add 'js' & 'has-js' to the HTML
-      document.documentElement.className = document.documentElement.className.replace('no-js', " ");
-      document.documentElement.className += ' js has-js ';
-    </script>
+		<div class="demo-wrap">
 
-   <style>
-      body,html{margin:0;padding:0;background:#fff;color:#949494;font-family:"Source Sans Pro",sans-serif;font-size:16px;font-weight:400;line-height:1.5;text-rendering:optimizeLegibility}.txt-up-5,.txt-up-6,h1,h2{font-weight:600;line-height:1.1;margin-bottom:10px;margin-top:0}html{box-sizing:border-box;-moz-text-size-adjust:100%;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}*,:after,:before{box-sizing:inherit}.is-disabled,[disabled]{cursor:default;opacity:.5;pointer-events:none}article,aside,canvas,details,footer,header,main,menu,nav,section,summary{display:block}.txt-up-6,h1{font-size:60px;font-size:3.75rem}.txt-up-5,h2{font-size:48px;font-size:3rem}.txt-up-3,.txt-up-4,h3,h4{font-weight:600;line-height:1.1;margin-bottom:8px}.txt-up-4,h3{font-size:36px;font-size:2.25rem;margin-top:0}.txt-up-3,h4{font-size:24px;font-size:1.5rem;margin-top:0}.txt-up-1,.txt-up-2,h5,h6{font-weight:600;line-height:1.3;margin-bottom:6px;margin-top:0}.txt-up-2,h5{font-size:20px;font-size:1.25rem}.txt-up-1,h6{font-size:18px;font-size:1.125rem}.txt-base,input,p{font-size:inherit}.txt-base,p{font-weight:inherit;line-height:inherit;margin:0 0 1.25em}.link,a{background-color:transparent;color:#4464c2;text-decoration:underline}.link--clean,.link:active,a:active{text-decoration:none}.link:active,.link:focus,.link:hover,a:active,a:focus,a:hover{color:#243976;outline-width:0}.link:focus,a:focus{outline:dotted thin}a:not([href]),a:not([href]):hover{color:#949494;text-decoration:none}.txt-bold,b,strong{font-weight:600}.txt-lighter{font-weight:200}.txt-light{font-weight:300}.txt-bolder{font-weight:700}.txt-normal{font-weight:400}[type=reset],[type=submit],button,html [type=button]{-webkit-appearance:button;cursor:pointer;font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit;line-height:normal;overflow:visible}button:-moz-focusring,button[type=submit]::-moz-focus-inner,input:-moz-focusring,input[type=submit]::-moz-focus-inner{outline:0}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}button object{pointer-events:none}.btn,[role=button],[type=button],[type=reset],[type=submit],button{-webkit-appearance:none;border:2px solid transparent;cursor:pointer;display:inline-block;font-weight:400!important;line-height:1;padding:1em 2em;position:relative;text-align:center;text-decoration:none!important;vertical-align:middle;border-radius:6px;text-transform:uppercase;background:#4464c2;color:#f8f8f8;-webkit-transition:-webkit-transform .15s ease-in-out,box-shadow .2s ease-in-out;transition:transform .15s ease-in-out,box-shadow .2s ease-in-out;-webkit-transform:translateY(0);transform:translateY(0);box-shadow:0 2px 0 0 #304c9d,0 2px 2px 0 rgba(0,0,0,.25)}.btn:focus,.btn:hover,[role=button]:focus,[role=button]:hover,[type=button]:focus,[type=button]:hover,[type=reset]:focus,[type=reset]:hover,[type=submit]:focus,[type=submit]:hover,button:focus,button:hover{outline:0;background-color:#304c9d;color:#fff}.btn.is-active,.btn:active,[role=button].is-active,[role=button]:active,[type=button].is-active,[type=button]:active,[type=reset].is-active,[type=reset]:active,[type=submit].is-active,[type=submit]:active,button.is-active,button:active{background-color:#243976;color:#f8f8f8;-webkit-transform:translateY(2px);transform:translateY(2px);box-shadow:none}.btn.link,[role=button].link,[type=button].link,[type=reset].link,[type=submit].link,button.link{text-decoration:underline!important}.btn--cta{background:#31b517;border:1px solid #31b517;box-shadow:0 2px 4px 0 rgba(0,0,0,.25),0 2px 0 0 #20810d;color:#fff}.btn--cta:focus,.btn--cta:hover{background-color:#20810d;border-color:#20810d;color:#fff}.btn--cta.is-active,.btn--cta:active{background-color:#155308;border-color:#155308;color:#fff}input{font-weight:inherit;line-height:normal;margin:0;overflow:visible;text-transform:none}.input-text,input[type=text]{-webkit-appearance:none;background-color:#fafafa;border-radius:2px;border:1px solid #e7e9ed;box-shadow:inset 0 2px 0 0 #eaeaea;color:#2a2a2a;font-family:inherit;min-height:36px;outline:0;padding:6px .5em 4px;position:relative;width:100%;z-index:2}.input-text:focus,input[type=text]:focus{background-color:#fff;border-color:#6589f2;box-shadow:inset 0 0 0 1px #6589f2}
-        .content-area { padding: 20px; }
-        .page { max-width: 1200px; margin: auto; padding: 80px; text-align: center; }
-        .display-block { display: block; }
-    </style>
+			<header class="demo-wrap__header">
+				<h1 class="demo-wrap__header__title">Custom Tooltips</h1>
+				<p>
+					Examples of accessible, custom tooltips.
+				</p>
+			</header>
 
-    <link rel="stylesheet" href="assets/aria-tooltips.css" />
-  </head>
-  <body>
+			<main aria-label="content">
+				<article>
+						<h2>
+							Tooltips primer
+						</h2>
 
-    <div class="page">
-      <header role="banner">
-        <h1>Accessible ARIA Tooltips</h1>
-      </header>
+						<details>
+							<summary>Information</summary>
+							<p>
+								A tooltip is meant to provide short, but non-essential, information to help further describe the element it is associated with.
+							</p>
+							<p>
+								In native HTML the <code>title</code> attribute can be used to provide an element with a tooltip. For example, hovering over: <a href="#!" title="a native html tooltip">this test link</a>.
+							</p>
+							<p>
+								The problem with HTML tooltips is that they are often not discoverable to people unless they are specifically using a mouse to interact with content.   Some browsers, like IE11 and pre-Chromium Edge (hopefully post Chromium as well), expose HTML tooltips on focus of an element.  However, this still means that elements that cannot (and often times should not) receive focus will still have tooltips that will likely be inaccessible to people not using a mouse.
+							</p>
 
-      <main role="main">
-        
-        <div class="content-area">
-          <p>
-            Note, there are some examples on this page of <code>span</code> elements with a 
-            <code>tabindex="0"</code>.  I would highly recommend not doing such things in production.
-            If your text strings need further descriptions, rewrite your text to be more descriptive :)
-          </p>
-          <span class="a11y-tip">
-            <span class="a11y-tip__trigger">
-              Tooltip Trigger span
-            </span>
+							<h3>Custom Tooltips</h3>
+							<p>
+								To create a custom tooltip, we should look to the
+								<a href="https://www.w3.org/TR/wai-aria-1.1/#tooltip">
+									ARIA specification for <code>role=tooltip</code>.
+								</a>
+							</p>
 
-            <span class="a11y-tip__help">
-              Tooltip content goes here
-            </span>
-          </span>
-        </div>
-
-
-        <div class="content-area">
-          <span class="a11y-tip a11y-tip--no-delay">
-            <a href="#!" class="a11y-tip__trigger">
-              Link w/top tooltip and no delay</a>
-
-            <span class="a11y-tip__help a11y-tip__help--top">
-              Activate this link to go somewhere! And here's some additional text to show just what happens when you say too much inside of a tooltip.
-            </span>
-          </span>
-        </div>
-
-        <div class="content-area">
-          <p>
-          Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-          <span class="a11y-tip">
-            <span class="a11y-tip__trigger">totam rem aperiam,</span>
-            <span class="a11y-tip__help a11y-tip__help--top">
-              tip to describe this ipsum.
-            </span>
-          </span>
-          eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
-          </p>
-        </div>
-
-        <div class="content-area">
-          <span class="a11y-tip">
-            <button type="button" class="a11y-tip__trigger" aria-describedby="tt_id">
-              Button w/bottom tooltip
-            </button>
-
-            <span id="tt_id" role="tooltip" class="a11y-tip__help a11y-tip__help--bottom">
-              Buttons do things on the page. Activate it to perform an action.
-            </span>
-          </span>
-        </div>
+							<p>
+								The following are criteria to follow when building a custom tooltip:
+							</p>
+							<ul>
+								<li>
+									The tooltip is invoked upon hover or focus of the element which the tooltip describes, after a short pause.
+								</li>
+								<li>
+									The tooltip should be referenced by the element that it is associated with by use of <code>aria-describedby</code>.
+								</li>
+								<li>
+									The tooltip itself should not be focusable, or contain elements which are focusable.  Contents announced by <code>aria-describedby</code> are flattened to a single text string.  Any nested semantics will be lost, if not completely ignored.  E.g. a "link" or "heading" will not be announced, only their text strings.  A list within a tooltip may be completely ignored by certain assistive technologies when announced as the flattened string.
+								</li>
+								<li>
+									The tooltip is dismissed after the element which invoked the tooltip has been blurred.
+								</li>
+								<li>
+									The tooltip should dismiss upon mouse hover leaving the element which invoked the tooltip, <strong>unless</strong> the mouse is moved to hover the tooltip itself, per <a href="https://www.w3.org/WAI/WCAG21/Understanding/content-on-hover-or-focus.html">WCAG success criterion for 1.4.13: Content on Hover or Focus</a>.  If mouse hover is no longer over the initial element that invoked the tooltip, nor the tooltip itself, then the tooltip is dismissed.
+								</li>
+								<li>
+									A tooltip is dismissible by use of the <code>Esc</code> key to mimic a native HTML tooltip's functionality, as well as also meeting WCAG 1.4.13.
+								</li>
+							</ul>
 
 
-        <div class="content-area">
-          <label for="test" class="display-block" style="padding-bottom: 12px;">
-            Input with right tooltip
-          </label>
-          <span class="a11y-tip">
-            <input id="test" placeholder="enter text" class="a11y-tip__trigger" aria-describedby="test_desc" type="text">
-
-            <span id="test_desc" role="tooltip" class="a11y-tip__help a11y-tip__help--right">
-              Enter something here. Text would be fine.
-            </span>
-          </span>
-        </div>
+							<h3>Custom accessible name "tooltips"</h3>
+							<p>
+								While not following the semantic definition of a tooltip, there are times where a design will use a tooltip-like popup to display the accessible name of an element.
+							</p>
+							<p>
+								Though not the ideal manner to do so, there are situations where even the <code>title</code> attribute can be used to provide an element its accessible name.  Therefore, this script will also allow for the "tooltip" to display the accessible name of an element, if designated to do so.
+							</p>
+							<p>
+								If used in this manner, the "tooltip" will not receive a <code>role=tooltip</code>.  It will be referenced from the associated trigger by <code>aria-labelledby</code> rather than <code>aria-describedby</code> since it's providing the name, and not a description.
+							</p>
 
 
-        <div class="content-area">
-          <span class="a11y-tip">
-            <button type="button" class="a11y-tip__trigger btn--cta" aria-describedby="ttx">
-              Button w/left tooltip
-            </button>
+							<h3>A native test</h3>
+							<p>
+								An <code>input</code> with a <code>title</code> attribute.  In this instance, the <code>title</code> provides the <code>input</code> with its accessible name, due to the <code>input</code> not having a name from more optimal sources.
+							</p>
+							<input title="test">
+						</details>
 
-            <span id="ttx" role="tooltip" class="a11y-tip__help a11y-tip__help--left">
-              This is another button!
-            </span>
-          </span>
-        </div>
-      </main>
 
-       <footer role="contentinfo" class="content-area">
-        <p>
-          Check it out on <a href="https://github.com/scottaohara/a11y_tooltips">GitHub</a>.
-        </p>
-      </footer>
-    </div> <!-- /.page -->
+						<section>
+							<h2>
+								Tooltip on a text fields
+							</h2>
 
-    <script src="https://code.jquery.com/jquery-2.2.3.min.js"></script>
-    <script src="assets/aria-tooltips.js"></script>
-  </body>
+							<div class="test">
+								<p>Hard coded fallback.</p>
+								<label for="name">
+									User Name
+								</label>
+								<div data-tooltip>
+									<input type="text" id="name" data-tooltip-trigger aria-describedby="name_tip">
+									<div data-tooltip-tip id="name_tip">
+										<p>
+											A user name can either be your phone number,<br>
+											or your email address.
+										</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="test">
+								<label for="name2">
+									Last Name
+								</label>
+								<div data-tooltip data-tooltip-block>
+									<input type="text" id="name2" data-tooltip-trigger aria-describedby="name2_tip">
+									<div data-tooltip-tip id="name2_tip">
+										<p>
+											As this is the Internet, an apostrophe is not allowed.
+										</p>
+										<p>Change your name.
+										</p>
+									</div>
+								</div>
+							</div>
+
+							<div class="test">
+								<div data-tooltip="label" data-tooltip-block>
+									<input type="text" aria-label="Middle Name" aria-describedby="m_name" data-tooltip-trigger title="test">
+								</div>
+								<p id="m_name" style="margin-bottom: 0; font-size: .825rem">
+									Not really sure why we need this...
+								</p>
+							</div>
+
+							<div class="test">
+								<h3>
+									Tooltip generated from title attribute
+								</h3>
+								<label for="petName">
+									Favorite Pet's Name
+								</label>
+								<div data-tooltip>
+									<input type="text" id="petName" data-tooltip-trigger title="It wasn't Fido, was it?">
+								</div>
+							</div>
+						</section>
+
+						<section>
+							<h2>
+								Tooltip on buttons and links
+							</h2>
+							<div class="test">
+								<h3>Tooltip hard coded in DOM.</h3>
+								<p>
+									<span data-tooltip>
+										<button type="button" data-tooltip-trigger>
+											Delete Account
+										</button>
+										<span data-tooltip-tip>
+											Deleting your account will mean it's deleted.
+										</span>
+									</span>
+								</p>
+							</div>
+
+							<div class="test">
+								<h3>Tooltip hard coded in DOM.</h3>
+								<p>
+									You can try to
+									<span data-tooltip>
+										<a href="#!" data-tooltip-trigger>
+											visit our online store
+											<span data-tooltip-tip>
+												External link.
+											</span>
+										</a>
+									</span>
+									to see if we have what you need.
+								</p>
+							</div>
+
+							<div class="test">
+								<h3>Tooltip created from <code></code></h3>
+								<p>
+									<span data-tooltip data-tooltip-content="Modify account settings.">
+										<button data-tooltip-trigger onClick="alert('this would edit something');">
+											Edit
+										</button>
+									</span>
+								</p>
+							</div>
+
+							<div class="test">
+								<h3>Tooltip created from <code></code></h3>
+								<p>
+									<span data-tooltip data-tooltip-content="External link" style="font-size: 1.75em">
+										<a href="#!" data-tooltip-trigger onClick="alert('this would go somewhere');">
+											How to make marvelously magnificent marbled muffins
+										</a>
+									</span>
+								</p>
+							</div>
+
+
+							<div class="test">
+								<h3>
+									Tooltip created from existing content in the DOM
+								</h3>
+								<p>
+									<span data-tooltip data-tooltip-source="fetch">
+										<button type="button"
+											data-tooltip-trigger
+											onClick="alert('this would delete something');">
+											Delete Account
+										</button>
+									</span>
+								</p>
+								<div id="fetch">
+									<p>Deleting is permanent.</p>
+									<ul>
+										<li>When it's gone it's gone.</li>
+										<li>You'll be sad.</li></ul>
+								</div>
+							</div>
+
+							<div class="test">
+								<h3>
+									Tooltip generated from title attribute
+								</h3>
+								<p>
+									<span data-tooltip>
+										<button
+											title="Now it's a custom tooltip"
+											data-tooltip-trigger
+											onClick="alert('this would delete something');">
+											Had a title
+										</button>
+									</span>
+								</p>
+							</div>
+						</section>
+					</article>
+			</main>
+		</div>
+
+		<script src="index.js"></script>
+		<script>
+			var selector = '[data-tooltip]';
+			var els = document.querySelectorAll(selector);
+
+			for ( var i = 0; i < els.length; i++ ) {
+				var dm = new ARIAtip( els[i] );
+			}
+		</script>
+	</body>
 </html>

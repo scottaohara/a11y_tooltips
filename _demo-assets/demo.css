@@ -1,0 +1,125 @@
+/**
+ * Demo styles
+ * Styling specific to the content and wrapping
+ * elements of each styled form control,
+ */
+html,
+body {
+	background: #fcfcfc;
+	font-family: arial;
+	font-size: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: border-box;
+}
+
+body {
+	line-height: 1.4;
+	overflow-x: hidden;
+}
+
+input,
+button {
+	font: inherit;
+}
+
+a {
+	color: #08599B;
+	font-weight: bold;
+}
+
+h2, h3, h4, h5, h6 {
+	margin-top: 2em;
+}
+
+main {
+	padding-top: .75em;
+}
+
+.demo > header {
+	border-bottom: 1px solid #aaa;
+}
+
+a:hover,
+*:focus {
+	box-shadow: none;
+	outline: 2px solid;
+	outline-offset: 2px;
+	text-decoration: none;
+}
+
+pre {
+	background: #fdfdfd;
+	border: 1px solid #ccc;
+	max-width: 100%;
+	overflow: auto;
+	padding: .5em;
+}
+
+hr {
+	margin: 1.5em 0;
+}
+
+.demo-wrap {
+	background: #fff;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
+	margin: 0 auto;
+	max-width: 660px;
+	padding: 0 1.5em 3em;
+}
+
+.demo-wrap__header {
+	background: #1a2a1a;
+	color: #fefefe;
+	margin: -1em -1.5em 0;
+	padding: 3em 1.5em 2em;
+	position: relative;
+}
+
+.demo-wrap__header a {
+	color: #fff;
+}
+
+.demo-wrap__header__title {
+	font-size: 1.3em;
+	margin-bottom: .5em;
+	margin-top: .5em;
+}
+
+.demo-details {
+	margin-top: 3em
+}
+
+.demo-details > h3 {
+	margin-top: 0;
+}
+
+/* IE + Edge need this to treat as a block element */
+details {
+	display: block;
+}
+
+p code {
+	white-space: nowrap;
+}
+
+
+.test {
+	padding: 1em;
+	margin: 1em 0;
+	border: 1px solid #ccc;
+}
+
+.test > :first-child {
+	margin-top: 0;
+}
+
+.test > :last-child {
+	margin-bottom: 0;
+}
