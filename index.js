@@ -66,13 +66,6 @@ var util = {
     triggerSelector: '[data-tooltip-trigger]'
   };
 
-  /**
-   * typeSelector should accept values
-   * - empty string = describedby
-   * - label
-   *     - display aria-label content
-   *     - if aria-labelledby must add aria-hidden
-   */
 
   var ARIAtip = function ( inst, options ) {
     var el = inst;
@@ -84,10 +77,6 @@ var util = {
     var tipType;
     var _options = Object.assign(tipConfig, options);
 
-
-    /**
-     * Initiate the
-     */
     var init = function () {
       // if an element has an ID, use that as the
       // basis for the tooltip's ID. Or, generate one.
@@ -280,8 +269,6 @@ var util = {
 
       el.addEventListener('mouseleave', hideTip, false);
       elTrigger.addEventListener('blur', hideTip, false);
-
-      elTrigger.addEventListener('keydown', globalEscape, false);
     };
 
 
