@@ -45,6 +45,15 @@ main {
 	border-bottom: 1px solid #aaa;
 }
 
+footer {
+	margin-top: 2em;
+	text-align: center;
+}
+
+footer :last-child {
+	margin-bottom: 0;
+}
+
 a:hover,
 *:focus {
 	box-shadow: none;
@@ -108,7 +117,6 @@ details {
 p code {
 	white-space: nowrap;
 }
-
 
 .test {
 	padding: 1em;
