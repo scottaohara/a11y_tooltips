@@ -14,6 +14,8 @@ A user should be able to hit the escape key to close a tooltip, regardless of if
 
 Tooltips should be brief in their content.  If an element requires a description that necessitates more than a brief explanation, the use of imagery, or more complex markup patterns than a text string (e.g. a list), then a "tooltip" is not the appropriate solution for your UI need.
 
+Tooltips in general are a bit quirky on touch devices, since there's no "hovering".  If you have a keyboard setup to work with your touch device, then the tooltips should be revealed when their trigger receives keyboard focus.  If you do get a tooltip to display on tap, a touch listener becomes active to allow for a tap anywhere in the current viewport to dismiss the tooltip.
+
 ## Minimum Required Mark-up  
 The script requires that the element that should have an associated tooltip be a child of a containing element that the script will search for.  
 
