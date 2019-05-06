@@ -63,9 +63,7 @@ var util = {
     tipContentAttr: 'data-tooltip-content',
 
     tipSelector: '[data-tooltip-tip]',
-    triggerSelector: '[data-tooltip-trigger]',
-
-    consoleWarn: 'Missing tip...'
+    triggerSelector: '[data-tooltip-trigger]'
   };
 
   /**
@@ -229,6 +227,7 @@ var util = {
       el.classList.add(_options.tipWrapperClass + '--show');
       // checkPositioning();
       doc.addEventListener('keydown', globalEscape, false);
+      doc.addEventListener('touchend', hideTip, false);
     };
 
     /**
@@ -241,6 +240,7 @@ var util = {
       el.classList.remove(_options.tipWrapperClass + '--suppress');
       // resetPositioning();
       doc.removeEventListener('keydown', globalEscape);
+      doc.addEventListener('touchend', hideTip);
     };
 
     /**
