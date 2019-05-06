@@ -271,7 +271,6 @@ var util = {
       elTrigger.addEventListener('blur', hideTip, false);
     };
 
-
     init.call(this);
     return this;
   }; // ARIAtip

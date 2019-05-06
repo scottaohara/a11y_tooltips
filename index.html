@@ -73,8 +73,18 @@
 							</ul>
 
 
+							<h3>Custom accessible name "tooltips"</h3>
 							<p>
-								Baseline test: a <code>input</code> with a <code>title</code> attribute.  In this instance, the <code>title</code> provides the <code>input</code> with its accessible name, due to the <code>input</code> not having a name from more optimal sources.
+								While not following the semantic definition of a tooltip, there are times where a design will use a tooltip-like popup to display the accessible name of an element.
+							</p>
+							<p>
+								Though not the ideal manner to do so, there are situations where even the <code>title</code> attribute can be used to provide an element its accessible name.  Therefore, this script will also allow for the "tooltip" to display the accessible name of an element, if designated to do so.
+							</p>
+
+
+							<h3>A native test</h3>
+							<p>
+								An <code>input</code> with a <code>title</code> attribute.  In this instance, the <code>title</code> provides the <code>input</code> with its accessible name, due to the <code>input</code> not having a name from more optimal sources.
 							</p>
 							<input title="test">
 						</details>
