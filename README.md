@@ -1,50 +1,141 @@
-# ARIA Tooltips
+# ARIA Tooltips or "Tooltips"
+The term "tooltip" can mean different things depending on the designer or developer's intent.  
 
-A progressively enhanced ARIA tooltip component.
+A tooltip traditionally is meant to be used to provide short, non-essential, description to an element.  However, "tooltips" are often used to reveal an element's accessible name.  Often visually indistinguishable from each other, this script at least aims to allow developers to set whether the "tooltip" is meant to reveal the accessible name for the element, or whether it's meant to provide a description to the element it is associated with.
 
 
-## Functionality  
-Tooltips appear when hovering over or focusing a tooltip component. 
 ## Rules for a tooltip
-Only one tooltip should be revealed at a time=.  For instance, there may be a situation where a user is navigating by keyboard, and with their mouse. If keyboard focus is currently set to an element that has a tooltip, and that tooltip is displayed, then if the user moves their mouse, then that tooltip should become hidden.
+Mouse hover or keyboard focus should reveal the tooltip for the element it is associated with. 
 
-A user should be able to hit the escape key to close a tooltip, regardless of if that tooltip was opened by focus or hover of an element.  Mouseout or blur of that element would reset the dismissal of the tooltip, so returning to that element, or moving to another element with a tooltip would allow the target element's tooltip to be revealed.
+An element should only have a single "tooltip" associated with it.  This means that a developer can only set a tooltip to either contain the element's accessible name, or a description. 
 
+An element with a custom tooltip cannot also have a `title` attribute to produce a native tooltip.  This script will always remove a `title` attribute from the trigger of the tooltip.
 
-Hover/focus should reveal the tooltip for the element it is associated with.
+A user should be able to hit the escape key to close a tooltip, regardless of if that tooltip was opened by focus or hover of an element.  
 
-A true tooltip should only contain up to a sentence or two of content. If it needs to be longer than that, or contain elements that are not simply text (e.g. lists, images, etc.) then it really shouldn't be a traditional tooltip.  Instead it should be a toggle tooltip (aka a disclosure widget styled to look like a tooltip) which will allow a virtual cursor, or keyboard focus to enter the "tooltip" so that users can parse through the information at their own pace.
+Tooltips should be brief in their content.  If an element requires a description that necessitates more than a brief explanation, the use of imagery, or more complex markup patterns than a text string (e.g. a list), then a "tooltip" is not the appropriate solution for your UI need.
 
 ## Minimum Required Mark-up  
+The script requires that the element that should have an associated tooltip be a child of a containing element that the script will search for.  
+
 ```html
+<wrapping-element data-tooltip>
+  <trigger-element data-tooltip-trigger>...</trigger-element>
+</wrapping-element>
+```
+
+Depending on the context in which the "trigger element" (often an interactive control) lives in the DOM, the "wrapping element" should meet the expectations for its parent element's [content model](https://html.spec.whatwg.org/multipage/dom.html#concept-element-content-model).
+
+For instance:
+
+```html
+<ul>
+  <li data-tooltip>
+    <trigger-element data-tooltip-trigger>...</trigger-element>
+  </li>
+</ul>
+
+<!-- or -->
+
+<div data-tooltip>
+  <trigger-element data-tooltip-trigger>...</trigger-element>
+</div>
+
+<!-- or -->
+
+<p data-tooltip>
+  <trigger-element data-tooltip-trigger>...</trigger-element>
+</p>
+```
+
+If the trigger element is meant to exist as a child element in an instance where a block level element were not appropriate (e.g. a paragraph), then the wrapping element should be a `span`.
+
+```html
+<p>
+  ...
+  <span data-tooltip>
+    <trigger-element data-tooltip-trigger>...</trigger-element>
+  </span>
 ...
 ```
 
-### The hooks
-`data-tooltip`
-the wrapping element of the tooltip component
-check for ID, if does not have one, generate
-if value of data-tooltip="toggle" then a 
-data-tooltip-trigger should be generated.
-the aria-label for this trigger should be 
-gathered from data-tooltip-label="..."
-if this does not exist, generate "more info" as the acc name.
+### Customize the script
+You may rather use your own data attributes, or classes with this script. As one of the function's parameters, you can pass in your values to overwrite the following:
 
-`data-tooltip-place-trigger`
-this attribute identifies the element in which the tooltip trigger
-should be placed (if generated). (if this attribute is not set
-then the tooltip trigger should be placed directly before the 
-.tooltip element)
+```js
+tipConfig = {
+  baseID: 'tt_',
+
+  tipWrapperClass: 'tooltip',
+  tipContentClass: 'tooltip__content',
+
+  tipTypeAttr: 'data-tooltip',
+  tipSourceAttr: 'data-tooltip-source',
+  tipContentAttr: 'data-tooltip-content',
+
+  tipSelector: '[data-tooltip-source]',
+  triggerSelector: '[data-tooltip-trigger]'
+}
+```
+
+
+### Attributes
+`data-tooltip`  
+This attribute is the default hook for the script to search for and find tooltip widgets in the DOM.  The attribute an either be set to the empty string, or may accept the token "label", in which it will run the setup for the tooltip to display the accessible name of the trigger element.   
 
 `data-tooltip-trigger`
-The element that triggers the reveal of a tooltip. This element should have a native or ARIA role that would be associated with receiving keyboard focus. e.g. an `img`. If used on an element that can not receive keyboard focus, then some users (screen reader users) may not be able to access the tooltip information.
+This attribute is required to be placed on the element that will have the tooltip associated with it. This element should be an element that can natively receive keyboard focus, e.g. a `button`, `<a href="...">`, or a form control.  
 
+`data-tooltip-content`  
+This attribute may be used on the widget wrapping element (along with `data-tooltip`) to define the text string for the generated tooltip.
 
-`.tooltip`
-The container of the tooltip content which should be given a `role='tooltip'`.
+For example:
+```html
+<div data-tooltip data-tooltip-content="Deleting an asset is permanent">
+  <button data-tooltip-trigger>
+    Delete
+  </button>
+</div>
+```
 
+`data-tooltip-tip`  
+This selector should be placed on the child element of `data-tooltip` that is the hard coded fall back for the tooltip, if this script were to not function.
 
-## The Events
+For example:
+```html
+<div data-tooltip>
+  <button data-tooltip-trigger aria-describedby="foo">
+    Delete
+  </button>
+  <p data-tooltip-tip id="foo">
+    Deleting an asset is permanent.
+  </p>
+</div>
+```
+
+`data-tooltip-source`  
+May be used on the widget wrapping element (along with `data-tooltip`) to point to the `id` of an element in the DOM that should become the source of the text string for the generated tooltip.
+
+For example:
+```html
+<div data-tooltip data-tooltip-source="foo">
+  <button data-tooltip-trigger>
+    Delete
+  </button>
+</div>
+<p id="foo">
+  Deleting an asset is permanent.
+</p>
+```
+
+### Default generated classes and tooltip markup
+`.tooltip`  
+The outter wrapper of the tooltip content. This class allows for initial positioning of the tooltip.
+
+`.tooltip__content`   
+The element that will receive an `id` to be referenced by the trigger element. If the tooltip acts as a description to the associated element, it will receive the `role="tooltip"` attribute.  
+
+If it is meant to be the visual representation of the accessible name, then it will receive the `aria-hidden="true"` attribute. This will ensure that the "tooltip" cannot be navigated to by a screen reader's virtual cursor, resulting in a duplicate announcement of the element's accessible name.  Even with `aria-hidden="true"`, the accessible name will still be appropriately set to the trigger element.
 
 
 
