@@ -10,12 +10,22 @@
 .tooltip {
 	font-size: .825rem;
 	left: 0;
-	min-width: 280px;
+	min-width: 260px;
 	pointer-events: none;
 	position: absolute;
 	top: 100%;
 	width: 100%;
 	z-index: 2;
+}
+
+.push-up .tooltip {
+	top: auto;
+	bottom: 100%;
+}
+
+.push-right .tooltip {
+	left: auto;
+	right: 0;
 }
 
 .tooltip__content {

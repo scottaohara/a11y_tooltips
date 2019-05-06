@@ -93,6 +93,8 @@ var util = {
       createTip();
       // add/modify the necessary attributes of the trigger.
       setupTrigger();
+      // get the generated tooltip
+      elTip = el.querySelector('.'+_options.tipContentClass);
       // Attach the various events to the triggers
       attachEvents();
     };
@@ -204,7 +206,19 @@ var util = {
      * If so, try to reposition to ensure it's within.
      */
     var checkPositioning = function () {
-      // TODO
+      var bounding = elTip.getBoundingClientRect();
+
+      if ( bounding.bottom > w.innerHeight ) {
+        el.classList.add('push-up');
+      }
+
+      if ( bounding.right > w.innerWidth ) {
+        el.classList.add('push-right');
+      }
+    };
+
+    var resetPositioning = function () {
+      el.classList.remove('push-up', 'push-right');
     };
 
     /**
@@ -214,7 +228,7 @@ var util = {
      */
     var showTip = function () {
       el.classList.add(_options.tipWrapperClass + '--show');
-      // checkPositioning();
+      checkPositioning();
       doc.addEventListener('keydown', globalEscape, false);
       doc.addEventListener('touchend', hideTip, false);
     };
@@ -227,7 +241,7 @@ var util = {
     var hideTip = function () {
       el.classList.remove(_options.tipWrapperClass + '--show');
       el.classList.remove(_options.tipWrapperClass + '--suppress');
-      // resetPositioning();
+      resetPositioning();
       doc.removeEventListener('keydown', globalEscape);
       doc.addEventListener('touchend', hideTip);
     };
