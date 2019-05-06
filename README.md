@@ -3,7 +3,6 @@ The term "tooltip" can mean different things depending on the designer or develo
 
 A tooltip traditionally is meant to be used to provide short, non-essential, description to an element.  However, "tooltips" are often used to reveal an element's accessible name.  Often visually indistinguishable from each other, this script at least aims to allow developers to set whether the "tooltip" is meant to reveal the accessible name for the element, or whether it's meant to provide a description to the element it is associated with.
 
-
 ## Rules for a tooltip
 Mouse hover or keyboard focus should reveal the tooltip for the element it is associated with. 
 
