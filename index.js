@@ -77,6 +77,7 @@ var util = {
     var tipType;
     var _options = Object.assign(tipConfig, options);
 
+
     var init = function () {
       // if an element has an ID, use that as the
       // basis for the tooltip's ID. Or, generate one.
@@ -128,30 +129,30 @@ var util = {
      * the trigger's title or aria-label attribute
      */
     var getTipContent = function () {
-      var toReturn; // text string to return
+      var returnTextString; // text string to return
       var tipAttrContent = el.getAttribute(_options.tipContentAttr);
       var tipAriaLabel = elTrigger.getAttribute('aria-label');
       var widgetChild = el.querySelector(_options.tipSelector);
       var externalSource = el.getAttribute(_options.tipSourceAttr);
 
       if ( tipAttrContent ) {
-        toReturn = tipAttrContent;
+        returnTextString = tipAttrContent;
       }
       else if ( externalSource ) {
         var sourceEl = doc.getElementById(externalSource);
-        toReturn = sourceEl.textContent;
+        returnTextString = sourceEl.textContent;
         sourceEl.parentNode.removeChild(sourceEl);
       }
       else if ( widgetChild ) {
-        toReturn = widgetChild.textContent;
+        returnTextString = widgetChild.textContent;
         widgetChild.parentNode.removeChild(widgetChild);
       }
       else if ( tipAriaLabel && tipType === 'label' ) {
-        toReturn = tipAriaLabel;
+        returnTextString = tipAriaLabel;
         elTrigger.removeAttribute('aria-label');
       }
       else if ( elTrigger.title ) {
-        toReturn = elTrigger.title;
+        returnTextString = elTrigger.title;
       }
 
       // an element cannot have both a custom tooltip
@@ -159,8 +160,9 @@ var util = {
       // matter what, remove the title attribute.
       elTrigger.removeAttribute('title');
 
-      return toReturn;
+      return returnTextString;
     };
+
 
     /**
      * Create the necessary tooltip components for each
@@ -178,13 +180,17 @@ var util = {
       if ( tipType !== 'label') {
         tipInner.setAttribute('role', 'tooltip');
       }
-      else {
-        tipInner.setAttribute('aria-hidden', 'true');
-      }
+      // this is a bit silly, but ensures that virtual cursor
+      // cannot interact with the tooltip, and that Chrome
+      // on PC w/JAWS and NVDA won't announce the tooltip
+      // multiple times, when it's added/removed from the
+      // a11y tree.
+      tipInner.setAttribute('aria-hidden', 'true');
 
       tipOuter.appendChild(tipInner);
       el.appendChild(tipOuter);
     };
+
 
     /**
      * Ensure the tooltip trigger has the appropriate
@@ -199,6 +205,7 @@ var util = {
         elTrigger.setAttribute('aria-describedby', elTipID);
       }
     };
+
 
     /**
      * Check the current viewport to determine if the tooltip
@@ -217,9 +224,16 @@ var util = {
       }
     };
 
+
+    /**
+     * Remove the positioning classes, assuming the next time
+     * the element is interacted with, it will require the
+     * default positioning.
+     */
     var resetPositioning = function () {
       el.classList.remove('push-up', 'push-right');
     };
+
 
     /**
      * Add class to show tooltip.
@@ -232,6 +246,7 @@ var util = {
       doc.addEventListener('keydown', globalEscape, false);
       doc.addEventListener('touchend', hideTip, false);
     };
+
 
     /**
      * Removes classes for show and/or suppressed tip.
@@ -246,6 +261,7 @@ var util = {
       doc.addEventListener('touchend', hideTip);
     };
 
+
     /**
      * forces dismiss, ensure tip cannot be re-shown.
      * until user purposefully moves away from tip.
@@ -253,6 +269,7 @@ var util = {
     var suppressTip = function () {
       el.classList.add(_options.tipWrapperClass + '--suppress');
     };
+
 
     /**
      * Global event to allow the ESC key to close
@@ -277,6 +294,7 @@ var util = {
       }
     };
 
+
     var attachEvents = function () {
       elTrigger.addEventListener('mouseenter', showTip, false);
       elTrigger.addEventListener('focus', showTip, false);
@@ -284,6 +302,7 @@ var util = {
       el.addEventListener('mouseleave', hideTip, false);
       elTrigger.addEventListener('blur', hideTip, false);
     };
+
 
     init.call(this);
     return this;
