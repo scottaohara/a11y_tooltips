@@ -19,8 +19,8 @@
 }
 
 .push-up .tooltip {
-	top: auto;
 	bottom: 100%;
+	top: auto;
 }
 
 .push-right .tooltip {
@@ -33,9 +33,9 @@
 	border-radius: 3px;
 	border: 1px solid #aaa;
 	display: inline-block;
-	visibility: hidden;
 	opacity: 0;
 	padding: .625em;
+	visibility: hidden;
 }
 
 .tooltip__content > * {
@@ -50,8 +50,12 @@
 	margin-top: 0;
 }
 
-.tooltip--show .tooltip {
+.tooltip--show {
 	pointer-events: auto;
+}
+
+.tooltip--suppress {
+	pointer-events: none;
 }
 
 .tooltip--show .tooltip__content {
