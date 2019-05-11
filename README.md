@@ -134,9 +134,9 @@ For example:
 The outter wrapper of the tooltip content. This class allows for initial positioning of the tooltip.
 
 `.tooltip__content`   
-The element that will receive an `id` to be referenced by the trigger element. If the tooltip acts as a description to the associated element, it will receive the `role="tooltip"` attribute.  
+The element that will receive an `id` to be referenced by the trigger element. If the tooltip acts as a description to the associated element, it will receive the `role="tooltip"` attribute (not that this role presently does all that much... the `aria-describedby` from the owning element (trigger) that points to the `id` of the tooltip is the attribute that is the most important for associating the tooltip with its associated element).  
 
-If it is meant to be the visual representation of the accessible name, then it will receive the `aria-hidden="true"` attribute. This will ensure that the "tooltip" cannot be navigated to by a screen reader's virtual cursor, resulting in a duplicate announcement of the element's accessible name.  Even with `aria-hidden="true"`, the accessible name will still be appropriately set to the trigger element.
+Tooltips, whether a description or accessible name will receive an `aria-hidden="true"` attribute. This will ensure that the tooltip cannot be navigated to by a screen reader's virtual cursor, resulting in a duplicate announcement of the content that was already announced when focusing the element that the tooltip is associated with.  This default setting may change depending on future clarification in the ARIA specification about the use of `role=tooltip`.
 
 
 
