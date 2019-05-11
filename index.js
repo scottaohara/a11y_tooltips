@@ -54,6 +54,7 @@ var util = {
 
   var tipConfig = {
     baseID: 'tt_',
+    ariaHiddenTip: true,
 
     tipWrapperClass: 'tooltip',
     tipContentClass: 'tooltip__content',
@@ -184,8 +185,11 @@ var util = {
       // cannot interact with the tooltip, and that Chrome
       // on PC w/JAWS and NVDA won't announce the tooltip
       // multiple times, when it's added/removed from the
-      // a11y tree.
-      tipInner.setAttribute('aria-hidden', 'true');
+      // a11y tree.  If you want to reveal the tips anyway,
+      // set the ariaHiddenTip config to false.
+      if ( _options.ariaHiddenTip ) {
+        tipInner.setAttribute('aria-hidden', 'true');
+      }
 
       tipOuter.appendChild(tipInner);
       el.appendChild(tipOuter);
