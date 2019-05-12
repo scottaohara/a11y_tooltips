@@ -60,7 +60,6 @@ var util = {
     tipContentClass: 'tooltip__content',
 
     tipTypeAttr: 'data-tooltip',
-    tipSourceAttr: 'data-tooltip-source',
     tipContentAttr: 'data-tooltip-content',
 
     tipSelector: '[data-tooltip-tip]',
@@ -134,15 +133,9 @@ var util = {
       var tipAttrContent = el.getAttribute(_options.tipContentAttr);
       var tipAriaLabel = elTrigger.getAttribute('aria-label');
       var widgetChild = el.querySelector(_options.tipSelector);
-      var externalSource = el.getAttribute(_options.tipSourceAttr);
 
       if ( tipAttrContent ) {
         returnTextString = tipAttrContent;
-      }
-      else if ( externalSource ) {
-        var sourceEl = doc.getElementById(externalSource);
-        returnTextString = sourceEl.textContent;
-        sourceEl.parentNode.removeChild(sourceEl);
       }
       else if ( widgetChild ) {
         returnTextString = widgetChild.textContent;
