@@ -10,12 +10,11 @@
 .tooltip {
 	font-size: .825rem;
 	left: 0;
-	min-width: 30ch;
+	min-width: 20ch;
 	max-width: 44ch;
 	pointer-events: none;
 	position: absolute;
 	top: 100%;
-	width: 80vw;
 	z-index: 2;
 }
 
