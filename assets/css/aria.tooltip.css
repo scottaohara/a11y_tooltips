@@ -10,11 +10,12 @@
 .tooltip {
 	font-size: .825rem;
 	left: 0;
-	min-width: 260px;
+	min-width: 30ch;
+	max-width: 44ch;
 	pointer-events: none;
 	position: absolute;
 	top: 100%;
-	width: 100%;
+	width: 80vw;
 	z-index: 2;
 }
 
@@ -50,16 +51,9 @@
 	margin-top: 0;
 }
 
-.tooltip--show {
-	pointer-events: auto;
-}
-
-.tooltip--suppress {
-	pointer-events: none;
-}
-
 .tooltip--show .tooltip__content {
 	opacity: 1;
+	pointer-events: auto;
 	transition: opacity .15s .8s ease-in;
 	visibility: visible;
 }
