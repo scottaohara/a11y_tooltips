@@ -56,7 +56,3 @@
 	transition: opacity .15s .8s ease-in;
 	visibility: visible;
 }
-
-.tooltip--suppress .tooltip__content {
-	visibility: hidden;
-}

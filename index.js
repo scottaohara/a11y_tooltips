@@ -252,19 +252,9 @@ var util = {
      */
     var hideTip = function () {
       el.classList.remove(_options.tipWrapperClass + '--show');
-      el.classList.remove(_options.tipWrapperClass + '--suppress');
       resetPositioning();
       doc.removeEventListener('keydown', globalEscape);
       doc.addEventListener('touchend', hideTip);
-    };
-
-
-    /**
-     * forces dismiss, ensure tip cannot be re-shown.
-     * until user purposefully moves away from tip.
-     */
-    var suppressTip = function () {
-      el.classList.add(_options.tipWrapperClass + '--suppress');
     };
 
 
@@ -283,7 +273,6 @@ var util = {
         case util.keyCodes.ESC:
           e.preventDefault();
           hideTip();
-          suppressTip();
           break;
 
         default:
