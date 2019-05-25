@@ -72,7 +72,6 @@ tipConfig = {
   tipContentClass: 'tooltip__content',
 
   tipTypeAttr: 'data-tooltip',
-  tipSourceAttr: 'data-tooltip-source',
   tipContentAttr: 'data-tooltip-content',
 
   tipSelector: '[data-tooltip-source]',
@@ -113,21 +112,6 @@ For example:
     Deleting an asset is permanent.
   </p>
 </div>
-```
-
-`data-tooltip-source`  
-May be used on the widget wrapping element (along with `data-tooltip`) to point to the `id` of an element in the DOM that should become the source of the text string for the generated tooltip.
-
-For example:
-```html
-<div data-tooltip data-tooltip-source="foo">
-  <button data-tooltip-trigger>
-    Delete
-  </button>
-</div>
-<p id="foo">
-  Deleting an asset is permanent.
-</p>
 ```
 
 ### Default generated classes and tooltip markup
