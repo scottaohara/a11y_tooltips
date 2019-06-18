@@ -105,7 +105,9 @@ var util = {
      * A tooltip can either provide a description to
      * the element that it is associated with, or it
      * can provide a means to visually display the element's
-     * accessible name.
+     * accessible name (making it not actually a tooltip then,
+     * but rather the accessible name that is revealed on
+     * hover/focus).
      */
     var tipType = function () {
       if ( el.getAttribute(_options.tipTypeAttr) === 'label' ) {
@@ -174,11 +176,12 @@ var util = {
       if ( tipType !== 'label') {
         tipInner.setAttribute('role', 'tooltip');
       }
-      // this is a bit silly, but ensures that virtual cursor
-      // cannot interact with the tooltip, and that Chrome
-      // on PC w/JAWS and NVDA won't announce the tooltip
-      // multiple times, when it's added/removed from the
-      // a11y tree.  If you want to reveal the tips anyway,
+      // this is a bit silly, as it shows how unnecessary the
+      // tooltip role is, but it ensures that a screen reader's
+      // virtual cursor cannot interact with the tooltip by itself,
+      // and helps reduce Chrome on PC w/JAWS and NVDA announcing the tooltip
+      // multiple times, when it's shown/hidden.  
+      // If you want to reveal the tips anyway,
       // set the ariaHiddenTip config to false.
       if ( _options.ariaHiddenTip ) {
         tipInner.setAttribute('aria-hidden', 'true');
